@@ -4,3 +4,5 @@ dot_config/kdeconnect/private_certificate.pem
 dot_config/kdeconnect/private_privateKey.pem
 dot_config/opencode/node_modules/
 dot_config/opencode/executable_opencode.json
+.env
+dot_config/.env
