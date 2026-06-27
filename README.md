@@ -2,6 +2,10 @@
 
 使用 [chezmoi](https://www.chezmoi.io/) 管理的 CachyOS 个人配置文件。
 
+## 截图
+
+![桌面截图](.github/assets/screenshot.png)
+
 ## 功能特性
 
 - 自动同步：每 2 小时通过 cron 自动推送到 GitHub
