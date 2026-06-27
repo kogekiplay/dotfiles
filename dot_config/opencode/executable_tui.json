@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "plugin": [
+    "@slkiser/opencode-quota"
+  ],
+  "mouse": true,
+  "keybinds": {
+    "input_select_all": "ctrl+a",
+    "input_line_home": "none"
+  }
+}

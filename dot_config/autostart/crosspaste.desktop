@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=CrossPaste
+Exec=/tmp/.mount_crosspHCkPGh/bin/crosspaste --minimize
+Categories=Utility
+Terminal=false
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=10
+X-MATE-Autostart-Delay=10
+X-KDE-autostart-after=panel

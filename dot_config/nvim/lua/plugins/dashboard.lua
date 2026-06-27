@@ -1,0 +1,80 @@
+return {
+  {
+    "nvimdev/dashboard-nvim",
+    event = "VimEnter",
+    dependencies = { { "nvim-tree/nvim-web-devicons" } },
+    config = function()
+      require("dashboard").setup({
+        theme = "doom",
+        config = {
+          header = {
+            "",
+            "███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗",
+            "████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║",
+            "██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║",
+            "██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║",
+            "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║",
+            "╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝",
+            "",
+          },
+          center = {
+            {
+              icon = " ",
+              icon_hl = "Title",
+              desc = "Find Files            ",
+              desc_hl = "String",
+              key = "f",
+              keymap = "SPC f f",
+              key_hl = "Number",
+              action = "Telescope find_files",
+            },
+            {
+              icon = " ",
+              icon_hl = "Title",
+              desc = "Recently Opened Files ",
+              desc_hl = "String",
+              key = "r",
+              keymap = "SPC f r",
+              key_hl = "Number",
+              action = "Telescope oldfiles",
+            },
+            {
+              icon = " ",
+              icon_hl = "Title",
+              desc = "Find Word             ",
+              desc_hl = "String",
+              key = "w",
+              keymap = "SPC f g",
+              key_hl = "Number",
+              action = "Telescope live_grep",
+            },
+            {
+              icon = " ",
+              icon_hl = "Title",
+              desc = "Configuration         ",
+              desc_hl = "String",
+              key = "c",
+              keymap = "SPC c",
+              key_hl = "Number",
+              action = "edit ~/.config/nvim/init.lua",
+            },
+            {
+              icon = " ",
+              icon_hl = "Title",
+              desc = "Lazy                  ",
+              desc_hl = "String",
+              key = "l",
+              keymap = "SPC l",
+              key_hl = "Number",
+              action = "Lazy",
+            },
+          },
+          footer = {
+            "",
+            "🎯 Ready to code!",
+          },
+        },
+      })
+    end,
+  },
+}
