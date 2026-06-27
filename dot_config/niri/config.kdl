@@ -1,0 +1,79 @@
+include "./cfg/autostart.kdl"
+include "./cfg/keybinds.kdl"
+include "./cfg/input.kdl"
+include "./cfg/display.kdl"
+include "./cfg/layout.kdl"
+include "./cfg/rules.kdl"
+include "./cfg/misc.kdl"
+include "./cfg/animation.kdl"
+binds {
+    Mod+Print { spawn "mark-shot"; }
+}
+layout {
+    // 聚焦窗口边框颜色（红紫到蓝紫渐变，低饱和度）
+    focus-ring {
+        width 2
+        active-gradient from="#a86c8d" to="#7875a6" angle=45
+        inactive-gradient from="#5e3f50" to="#43425e" angle=45
+    }
+
+    // 或者使用 border 替代 focus-ring
+    border {
+        off
+        // active-gradient from="#a86c8d" to="#7875a6" angle=45
+        // inactive-gradient from="#5e3f50" to="#43425e" angle=45
+    }
+}
+
+environment {
+    PATH "/home/lanrhyme/.local/bin:/home/lanrhyme/.npm-global/bin:/usr/local/bin:/usr/bin:/bin"
+    // 保持其他必要的 Wayland 环境变量
+    XMODIFIERS "@im=fcitx"
+    QT_IM_MODULE "fcitx"
+    GTK_IM_MODULE "fcitx"
+    SDL_IM_MODULE "fcitx"
+}
+
+input {
+	mouse {
+		accel-profile "flat"
+	}
+}
+
+window-rule {
+	match app-id=".*"
+	exclude app-id="org.kde.krita"
+	opacity 0.8
+	background-effect {
+		blur true
+	}
+}
+
+window-rule {
+	match app-id="org.kde.krita"
+	opacity 1.0
+	background-effect {
+		blur false
+	}
+}
+
+window-rule {
+	match app-id="menu.kando.Kando"
+	open-floating true
+	open-focused true
+	opacity 1.0
+	focus-ring { off; }
+	border { off; }
+	shadow { off; }
+	geometry-corner-radius 0
+	background-effect {
+		blur false
+	}
+}
+
+cursor {
+    xcursor-theme "Bibata-Modern-Classic"
+    xcursor-size 16
+}
+
+
