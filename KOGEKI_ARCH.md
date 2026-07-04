@@ -21,6 +21,9 @@ This fork tracks LanRhyme's desktop style as upstream inspiration, but the activ
 ## Post-Apply Commands
 
 ```bash
+sudo usermod -aG input kogeki
+printf '%s\n' 'z /dev/uinput 0660 root input -' | sudo tee /etc/tmpfiles.d/uinput.conf >/dev/null
+sudo systemd-tmpfiles --create /etc/tmpfiles.d/uinput.conf
 systemctl --user enable --now ydotool.service
 ```
 

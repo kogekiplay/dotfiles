@@ -53,8 +53,21 @@ yay -S --needed noctalia-git kando-bin bibata-cursor-theme-bin
 
 Sparkle is installed separately from its upstream release package and is intentionally not managed here.
 
+## System Setup
+
+`ydotool` needs `/dev/uinput` writable by the `input` group. Configure it once:
+
+```bash
+sudo usermod -aG input kogeki
+printf '%s\n' 'z /dev/uinput 0660 root input -' | sudo tee /etc/tmpfiles.d/uinput.conf >/dev/null
+sudo systemd-tmpfiles --create /etc/tmpfiles.d/uinput.conf
+systemctl --user enable --now ydotool.service
+```
+
+Log out and back in after changing group membership.
+
 ## Notes
 
 - Noctalia's wallpaper hook runs `~/.config/noctalia/apply-morandi.sh`.
 - `morandi-gen.py` updates colors for niri, fcitx5, starship, fastfetch, alacritty, cava, and Qt/KDE color schemes.
-- `ydotool` needs the user in the `input` group and the user service enabled for Kando's Krita key menus.
+- Kando's Krita key menus use the `ydotool` user service.
