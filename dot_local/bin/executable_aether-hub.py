@@ -4,6 +4,7 @@ import os
 import sys
 import subprocess
 import shlex
+import shutil
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
                              QLineEdit, QPushButton, QLabel, QScrollArea, QFrame, 
                              QMenu, QComboBox, QStackedWidget, QGridLayout)
@@ -18,6 +19,32 @@ FG_DIM = "#b5b4b0"
 FG_MUTED = "#6c6a62"
 ACCENT = "#8d8768"
 BORDER = "#3d3b34"
+
+def open_config_file(path):
+    editor = os.environ.get("AETHER_HUB_EDITOR")
+    if editor:
+        subprocess.Popen(shlex.split(editor) + [path])
+        return
+
+    terminal_editors = ["micro", "nvim", "nano"]
+    terminals = [
+        ("alacritty", ["-e"]),
+        ("kitty", ["-e"]),
+        ("foot", []),
+        ("wezterm", ["start", "--"]),
+    ]
+
+    for term, args in terminals:
+        term_bin = shutil.which(term)
+        if not term_bin:
+            continue
+        for editor_name in terminal_editors:
+            editor_bin = shutil.which(editor_name)
+            if editor_bin:
+                subprocess.Popen([term_bin, *args, editor_bin, path])
+                return
+
+    subprocess.Popen(["xdg-open", path])
 
 class DesktopEntry:
     def __init__(self, filename):
@@ -566,7 +593,7 @@ class NiriConfigPage(QWidget):
                 os.makedirs(os.path.dirname(full_path), exist_ok=True)
             if not os.path.exists(full_path):
                 open(full_path, "w").close()
-            subprocess.Popen(["xdg-open", full_path])
+            open_config_file(full_path)
             
         card.mouseReleaseEvent = open_file
         return card
