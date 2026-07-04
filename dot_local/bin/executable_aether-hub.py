@@ -46,6 +46,14 @@ def open_config_file(path):
 
     subprocess.Popen(["xdg-open", path])
 
+def run_shell_command(command):
+    subprocess.Popen(
+        ["sh", "-lc", command],
+        start_new_session=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
 class DesktopEntry:
     def __init__(self, filename):
         self.filename = filename
@@ -622,7 +630,7 @@ class QuickActionsPage(QWidget):
         actions = [
             ("重载 Niri 配置", "niri msg action reload-config", "view-refresh"),
             ("重载 Fcitx5 输入法", "fcitx5-remote -r || fcitx5 -r -d", "preferences-desktop-keyboard"),
-            ("重启 Shell/UI 环境", "killall noctalia; noctalia &", "system-run")
+            ("重启 Shell/UI 环境", "pkill -x noctalia || true; sleep 0.3; nohup noctalia -d >/tmp/noctalia-restart.log 2>&1 &", "system-run")
         ]
         
         row, col = 0, 0
@@ -671,16 +679,7 @@ class QuickActionsPage(QWidget):
         
         def run_action(e, c=cmd):
             try:
-                if c.startswith("xdg-open"):
-                    subprocess.Popen(shlex.split(c))
-                elif c.startswith("niri"):
-                    subprocess.Popen(shlex.split(c))
-                else:
-                    # just spawn it in terminal if it's btop, else normally
-                    if c == "btop":
-                        subprocess.Popen(["kitty", "-e", "btop"])
-                    else:
-                        subprocess.Popen(shlex.split(c))
+                run_shell_command(c)
             except Exception:
                 pass
                 
