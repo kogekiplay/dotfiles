@@ -630,7 +630,7 @@ class QuickActionsPage(QWidget):
         actions = [
             ("重载 Niri 配置", "niri msg action reload-config", "view-refresh"),
             ("重载 Fcitx5 输入法", "fcitx5-remote -r || fcitx5 -r -d", "preferences-desktop-keyboard"),
-            ("重启 Shell/UI 环境", "pkill -x noctalia || true; sleep 0.3; nohup noctalia -d >/tmp/noctalia-restart.log 2>&1 &", "system-run")
+            ("重启 Shell/UI 环境", "export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$(id -u)} WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-1}; pkill -x noctalia || true; sleep 0.3; nohup noctalia -d >/tmp/noctalia-restart.log 2>&1 &", "system-run")
         ]
         
         row, col = 0, 0
