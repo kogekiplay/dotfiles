@@ -686,35 +686,39 @@ class QuickActionsPage(QWidget):
         card.mouseReleaseEvent = run_action
         return card
 
-class Sidebar(QFrame):
+class TopNav(QFrame):
     pageChanged = pyqtSignal(int)
     
     def __init__(self):
         super().__init__()
-        self.setFixedWidth(200)
-        self.setStyleSheet(f"QFrame {{ background-color: {BG_CARD}; border-right: 1px solid {BORDER}; }}")
+        self.setFixedHeight(72)
+        self.setStyleSheet(f"QFrame {{ background-color: {BG_CARD}; border-bottom: 1px solid {BORDER}; }}")
         
-        self.layout = QVBoxLayout(self)
-        self.layout.setContentsMargins(12, 24, 12, 24)
-        self.layout.setSpacing(6)
+        self.layout = QHBoxLayout(self)
+        self.layout.setContentsMargins(18, 12, 18, 12)
+        self.layout.setSpacing(8)
         
         title = QLabel("Aether Hub")
-        title.setStyleSheet(f"color: {FG_MUTED}; font-size: 13px; font-weight: bold; padding: 0 16px 8px 16px; background-color: transparent; border: none;")
+        title.setFixedWidth(150)
+        title.setStyleSheet(f"color: {FG}; font-size: 17px; font-weight: bold; background-color: transparent; border: none;")
         self.layout.addWidget(title)
+        self.layout.addStretch()
         
         self.btns = []
         
     def add_page(self, text, active=False):
-        btn = QPushButton("  " + text)
+        btn = QPushButton(text)
         btn.setCheckable(True)
         btn.setChecked(active)
+        btn.setFixedHeight(38)
+        btn.setMinimumWidth(118)
         btn.setStyleSheet(f"""
             QPushButton {{
-                background-color: transparent; color: {FG_DIM}; border-radius: 20px;
-                padding: 10px 16px; text-align: left; font-weight: bold; border: none; font-size: 14px;
+                background-color: transparent; color: {FG_DIM}; border-radius: 8px;
+                padding: 0 14px; text-align: center; font-weight: bold; border: none; font-size: 13px;
             }}
             QPushButton:hover {{ background-color: {BG_HOVER}; color: {FG}; }}
-            QPushButton:checked {{ background-color: {BG_HOVER}; color: {ACCENT}; }}
+            QPushButton:checked {{ background-color: {BG_HOVER}; color: {ACCENT}; border: 1px solid {BORDER}; }}
         """)
         idx = len(self.btns)
         btn.clicked.connect(lambda _, i=idx: self.on_btn_clicked(i))
@@ -729,7 +733,7 @@ class Sidebar(QFrame):
         self.pageChanged.emit(idx)
         
     def finish_setup(self):
-        self.layout.addStretch()
+        pass
 
 class AetherHubWindow(QMainWindow):
     def __init__(self):
@@ -741,12 +745,12 @@ class AetherHubWindow(QMainWindow):
         
         central = QWidget()
         self.setCentralWidget(central)
-        main_layout = QHBoxLayout(central)
+        main_layout = QVBoxLayout(central)
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
         
-        self.sidebar = Sidebar()
-        main_layout.addWidget(self.sidebar)
+        self.top_nav = TopNav()
+        main_layout.addWidget(self.top_nav)
         
         self.stacked = QStackedWidget()
         self.stacked.setStyleSheet(f"QStackedWidget {{ background-color: {BG}; }}")
@@ -760,12 +764,12 @@ class AetherHubWindow(QMainWindow):
         self.stacked.addWidget(self.niri_page)
         self.stacked.addWidget(self.actions_page)
         
-        self.sidebar.pageChanged.connect(self.stacked.setCurrentIndex)
+        self.top_nav.pageChanged.connect(self.stacked.setCurrentIndex)
         
-        self.sidebar.add_page("应用可见性", active=True)
-        self.sidebar.add_page("Niri 窗口管理器")
-        self.sidebar.add_page("常用工具操作")
-        self.sidebar.finish_setup()
+        self.top_nav.add_page("应用可见性", active=True)
+        self.top_nav.add_page("Niri 窗口管理器")
+        self.top_nav.add_page("常用工具操作")
+        self.top_nav.finish_setup()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
