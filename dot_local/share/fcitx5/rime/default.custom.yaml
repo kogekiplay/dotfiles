@@ -1,4 +1,8 @@
 patch:
+  # 雾凇拼音默认预设，使用简体中文词库。
+  __include: rime_ice_suggestion:/
+  schema_list:
+    - schema: rime_ice
   # 菜单
   menu:
     page_size: 8  # 候选词个数

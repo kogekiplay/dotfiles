@@ -51,6 +51,12 @@ AUR/third-party packages used on this install:
 yay -S --needed noctalia-git kando-bin bibata-cursor-theme-bin
 ```
 
+Arch Linux CN packages used on this install:
+
+```bash
+sudo pacman -S --needed rime-ice-pinyin-git
+```
+
 Sparkle is installed separately from its upstream release package and is intentionally not managed here.
 
 ## System Setup
