@@ -1,11 +1,17 @@
-source /usr/share/cachyos-fish-config/cachyos-config.fish
+set -gx XMODIFIERS @im=fcitx
+set -gx QT_IM_MODULE fcitx
 
-# overwrite greeting
-# potentially disabling fastfetch
-#function fish_greeting
-#    # smth smth
-#end
+fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.npm-global/bin
+fish_add_path $HOME/.cargo/bin
+fish_add_path $HOME/.bun/bin
 
+if status is-interactive
+    if type -q fastfetch
+        fastfetch
+    end
 
-# Added by Antigravity CLI installer
-set -gx PATH "/home/lanrhyme/.local/bin" $PATH
+    if type -q starship
+        starship init fish | source
+    end
+end

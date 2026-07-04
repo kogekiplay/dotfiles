@@ -114,7 +114,6 @@
 | `Mod+Shift+Esc` | 显示快捷键覆盖 |
 | `Mod+Escape` | 切换快捷键抑制（全屏应用卡住时使用） |
 | `Mod+O` | 切换概览模式 |
-| `Mod+Shift+U` | 切换 UGEE 数位板桥接 |
 | `Mod+Shift+P` | 关闭显示器（OLED 省电/隐私） |
 | `Ctrl+Alt+Delete` | 退出 Niri |
 

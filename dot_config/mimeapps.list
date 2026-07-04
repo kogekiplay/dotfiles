@@ -1,12 +1,7 @@
 [Default Applications]
-x-scheme-handler/clash=clash-verge.desktop;
-x-scheme-handler/clash-verge=clash-verge.desktop;
-application/yaml=neovide.desktop
-text/plain=neovide.desktop
-x-scheme-handler/antigravity=antigravity.desktop
+application/yaml=nvim.desktop
+text/plain=nvim.desktop
 
 [Added Associations]
-application/yaml=neovide.desktop;
-text/plain=neovide.desktop;
-x-scheme-handler/clash=clash-verge.desktop;
-x-scheme-handler/clash-verge=clash-verge.desktop;
+application/yaml=nvim.desktop;
+text/plain=nvim.desktop;

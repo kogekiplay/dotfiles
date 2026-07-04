@@ -10,7 +10,7 @@ GPU 加速终端模拟器配置。
 
 ### 窗口
 
-- 标题：`Alacritty@CachyOS`
+- 标题：`Alacritty@Arch`
 - 透明度：0.88
 - 内边距：16px
 - 默认窗口大小：100 列 × 30 行

@@ -1,7 +1,17 @@
-dot_config/kdeconnect/private_privateKey.pem
-dot_config/kdeconnect/private_certificate.pem
-dot_config/noctalia/plugins/github-feed/settings.json
-dot_config/noctalia/plugins/github-feed/cache/
-dot_config/opencode/node_modules/
-dot_config/opencode/opencode.json
-dot_config/frp/frpc.toml
+# Runtime state and private credentials that should never be managed by chezmoi.
+README.md
+AGENTS.md
+agent.md
+KOGEKI_ARCH.md
+dot_config/gh/
+dot_config/kdeconnect/
+dot_config/opencode/
+dot_config/private_gpu-screen-recorder/
+dot_config/private_kando_backup/
+dot_config/noctalia/plugins/*/settings.json
+dot_config/noctalia/plugins/*/cache/
+dot_config/sparkle/
+dot_local/share/io.github.clash-verge-rev.clash-verge-rev/
+dot_local/share/com.follow.clash/
+dot_local/share/sparkle/
+dot_local/share/chezmoi/sync.log

@@ -1,36 +1,20 @@
-# LanRhyme's System Guidelines for AI Agents
+# Agent Notes
 
-These rules define the user's system architecture, preferences, and mandatory procedures for configuring or modifying the environment. All agents must follow these instructions closely.
+This repository is kogeki's Arch Linux dotfiles source for chezmoi
 
-## 1. System Architecture & Package Management
-- **OS**: Arch Linux (CachyOS).
-- **Package Managers**: Use `paru` for AUR packages and `pacman` for official repositories. Use `--noconfirm` when installing packages.
-- **Display Server & WM**: Wayland + `niri` (compositor).
-- **Desktop Elements**: `noctalia` (status bar), `kando` (pie menus).
+## System
 
-## 2. Global Theming Engine (Morandi Theme)
-- The system uses a centralized, dynamic theme generator written in Python that hooks into wallpaper changes to generate "Morandi" (low saturation, warm/cool) colors.
-- **Core Script Location**: `~/.config/noctalia/morandi-gen.py`
-- **Rule**: If requested to theme a new application or modify UI colors, **DO NOT** edit the application's config files directly in isolation. Instead, you MUST extend `morandi-gen.py`. Add a `write_<app>` function that parses the application's config and injects the `palette` dictionary colors, call it in `main()`, and run the script. This ensures the app syncs automatically with future wallpaper changes.
+- OS: plain Arch Linux
+- Desktop: niri on Wayland with Noctalia 5
+- Shell tools: fish, starship, fastfetch
+- Input method: fcitx5 with Rime
+- Proxy: managed outside this repository, currently via Sparkle
 
-## 3. Configuration Management (Chezmoi)
-- **Tool**: `chezmoi` is used to manage dotfiles.
-- **Source Repository**: `~/.local/share/chezmoi`
-- **Rule**: When modifying system configuration files (e.g., `~/.config/app/config`), you must ensure the changes are committed to the dotfiles repository. A dedicated sync script is provided at `~/.local/bin/dotfiles-sync.sh`. Run this script immediately after applying and testing any dotfile modifications.
-- **Rule**: If you edit scripts directly in `~/.config`, remember to edit the source in `~/.local/share/chezmoi` first and copy it over, or run `chezmoi re-add` if you edit the local copy.
+## Rules
 
-## 4. Documentation & Writing Preferences
-- **Formatting Rule**: **NEVER** use full stops/periods (句号) and **NEVER** use emojis when writing or updating `README.md` files or markdown documentation. Keep it clean and minimalist.
-- **Tone**: Keep conversational responses concise, direct, and professional.
-
-## 5. Storage & File System
-- The system has access to Windows partitions:
-  - Windows C Drive: `/mnt/WindowsC`
-  - Windows D Drive: `/mnt/WindowsD`
-- When searching for external VSTs, games, or Windows configurations, always check these mount points.
-
-## 6. Configuration Memory & Context (MEMORY.md)
-- **Concept**: To facilitate seamless configuration work and maintain context across sessions, agents must use a centralized memory file.
-- **Location**: `~/MEMORY.md`
-- **Read Rule**: Before modifying dotfiles or starting a configuration task, you MUST read `~/MEMORY.md` to understand the user's current setup state, ongoing tasks, and structural preferences.
-- **Write Rule**: When the user introduces a new system component, establishes a configuration pattern (e.g., how paths are managed), or leaves a task unfinished, you MUST update `~/MEMORY.md`. Keep it focused on the current architecture, active TODOs, and specific environmental states that are critical for ongoing configuration work.
+- Keep the default branch as `main`
+- Do not add proxy subscriptions, proxy client state, GitHub credentials, KDE Connect pairings, or runtime caches
+- Use Noctalia TOML, not old Noctalia JSON/plugin snapshots
+- If adding theme support for another app, extend `dot_config/noctalia/morandi-gen.py`
+- Prefer editable text configs over binary application state
+- Apply changes through chezmoi and verify niri/Noctalia configs before claiming they are ready

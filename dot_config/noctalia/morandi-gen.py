@@ -433,76 +433,8 @@ def write_obs(palette):
         conf = re.sub(r"^CurrentTheme3=.*", "CurrentTheme3=Yami_Morandi", conf, flags=re.MULTILINE)
         obs_config.write_text(conf)
 
-def write_clash_verge(palette):
-    config_path = Path.home() / ".local/share/io.github.clash-verge-rev.clash-verge-rev/verge.yaml"
-    if not config_path.exists():
-        return
 
-    content = config_path.read_text()
-
-    css = f""":root {{
-  --joy-palette-background-body: {palette['base']} !important;
-  --joy-palette-background-surface: {palette['surface0']} !important;
-  --joy-palette-background-level1: {palette['surface1']} !important;
-  --joy-palette-background-level2: {palette['surface2']} !important;
-  --joy-palette-background-level3: {palette['overlay0']} !important;
-  --mui-palette-background-default: {palette['base']} !important;
-  --mui-palette-background-paper: {palette['surface0']} !important;
-  --bg-base: {palette['base']} !important;
-  --bg-surface: {palette['surface0']} !important;
-  --mui-palette-primary-contrastText: #ffffff !important;
-  --joy-palette-primary-solidColor: #ffffff !important;
-}}
-body, #root, main, .MuiDrawer-paper, .MuiAppBar-root, .layout-content, .page, .page-content {{
-  background-color: {palette['base']} !important;
-  background-image: none !important;
-  color: {palette['text']} !important;
-}}
-.MuiPaper-root, .MuiCard-root, .MuiDialog-paper, .MuiPopover-paper {{
-  background-color: {palette['surface0']} !important;
-  background-image: none !important;
-  border-radius: 12px !important;
-  border: 1px solid {palette['surface1']} !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
-}}
-.Mui-selected, .Mui-selected *, .MuiButton-containedPrimary, .MuiButton-containedPrimary *, .clash-active {{
-  color: #ffffff !important;
-}}
-* {{
-  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-              border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}}
-.MuiButtonBase-root:hover, .MuiMenuItem-root:hover, .clash-hover-effect:hover {{
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.2) !important;
-}}
-.MuiButtonBase-root:active, .MuiMenuItem-root:active, .clash-hover-effect:active {{
-  transform: translateY(1px) !important;
-  box-shadow: none !important;
-}}"""
-
-    css_indented = "\n    ".join(css.split("\n"))
-    
-    theme_setting = f"theme_setting:\n  primary_color: '{palette['iris']}'\n  secondary_color: '{palette['foam']}'\n  info_color: '{palette['sky']}'\n  error_color: '{palette['love']}'\n  warning_color: '{palette['gold']}'\n  success_color: '{palette['pine']}'\n  css_injection: |\n    {css_indented}"
-    
-    if "theme_setting: null" in content:
-        content = re.sub(r"^theme_setting:\s*null", theme_setting, content, flags=re.MULTILINE)
-    elif re.search(r"^theme_setting:", content, flags=re.MULTILINE):
-        content = re.sub(r"^theme_setting:.*(\n\s+.*)*", theme_setting, content, flags=re.MULTILINE)
-    else:
-        content += "\n" + theme_setting + "\n"
-        
-    content = re.sub(r"^css_injection:.*(\n\s+.*)*", "", content, flags=re.MULTILINE).strip() + "\n"
-        
-    config_path.write_text(content)
-
-
-
-
-def apply_system_changes(wallpaper_path=None):
+def apply_system_changes():
     def run_ignore_missing(*args, **kwargs):
         try:
             subprocess.run(*args, **kwargs)
@@ -517,10 +449,6 @@ def apply_system_changes(wallpaper_path=None):
     run_ignore_missing(["niri", "msg", "action", "load-config-file"], stderr=subprocess.DEVNULL)
     run_ignore_missing(["pkill", "-USR2", "cava"], stderr=subprocess.DEVNULL)
     
-    if wallpaper_path and Path(wallpaper_path).exists():
-        efi_dir = "/boot/efi"
-        subprocess.run(["sudo", "magick", wallpaper_path, "-blur", "0x12", "-resize", "1920x1080!", "-quality", "95", f"{efi_dir}/limine_bg.png"], stderr=subprocess.DEVNULL)
-        
     try:
         pid = subprocess.check_output(["pgrep", "-x", "fcitx5"]).decode().strip()
         if pid:
@@ -530,37 +458,6 @@ def apply_system_changes(wallpaper_path=None):
         pass
     subprocess.Popen(["fcitx5"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
 
-def write_flclash(palette):
-    config_path = Path.home() / ".local/share/com.follow.clash/shared_preferences.json"
-    if not config_path.exists():
-        return
-        
-    try:
-        with open(config_path, "r") as f:
-            data = json.load(f)
-            
-        if "flutter.config" in data:
-            flutter_config = json.loads(data["flutter.config"])
-            
-            hex_color = palette['iris'].lstrip('#')
-            if len(hex_color) == 6:
-                argb_int = int("ff" + hex_color, 16)
-            else:
-                argb_int = int(hex_color, 16)
-                
-            if "themeProps" not in flutter_config:
-                flutter_config["themeProps"] = {}
-                
-            flutter_config["themeProps"]["primaryColor"] = argb_int
-            flutter_config["themeProps"]["pureBlack"] = False
-            flutter_config["themeProps"]["themeMode"] = "dark"
-            
-            data["flutter.config"] = json.dumps(flutter_config, separators=(',', ':'))
-            
-            with open(config_path, "w") as f:
-                json.dump(data, f, separators=(',', ':'))
-    except Exception as e:
-        print(f"Failed to write flclash theme: {e}")
 
 def write_cava(palette):
     cava_dir = Path.home() / ".config/cava"
@@ -615,7 +512,7 @@ def write_libswell(palette):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--wallpaper", help="Path to current wallpaper for limine sync")
+    parser.add_argument("--wallpaper", help="Path to current wallpaper. Kept for the Noctalia hook.")
     args = parser.parse_args()
 
     if not NOCTALIA_COLORS.exists():
@@ -633,12 +530,10 @@ def main():
     write_alacritty()
     write_kde(colors)
     write_obs(palette)
-    write_clash_verge(palette)
     write_cava(palette)
-    write_flclash(palette)
     write_libswell(palette)
     
-    apply_system_changes(args.wallpaper)
+    apply_system_changes()
     
     try:
         write_blender(palette)
@@ -651,12 +546,7 @@ def main():
         print(f"Failed to write godot theme: {e}")
         
 
-    try:
-        write_obs(palette)
-    except Exception as e:
-        print(f"Failed to write obs theme: {e}")
-
-    apply_system_changes(args.wallpaper)
+    apply_system_changes()
     print("Morandi theme generated and system changes applied successfully.")
 
 if __name__ == "__main__":

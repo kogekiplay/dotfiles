@@ -14,10 +14,6 @@ input {
         natural-scroll // Enable natural (macOS-style) scrolling
     }
 
-    tablet {
-        map-to-output "HDMI-A-1"
-    }
-
     focus-follows-mouse // Automatically focus windows under the mouse pointer
     workspace-auto-back-and-forth // Enable workspace back & forth switching
 }

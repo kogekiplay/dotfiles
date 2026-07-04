@@ -1,0 +1,28 @@
+// Initial Morandi colors. morandi-gen.py updates this file from the active wallpaper.
+layout {
+    focus-ring {
+        width 2
+        active-gradient from="#8d8768" to="#6f8061" angle=45
+        inactive-gradient from="#343431" to="#41413d" angle=45
+    }
+    border {
+        off
+    }
+    shadow {
+        color "#34343170"
+    }
+    tab-indicator {
+        active-color "#8d8768"
+        inactive-color "#41413d"
+        urgent-color "#b17c57"
+    }
+    insert-hint {
+        color "#8d876880"
+    }
+}
+recent-windows {
+    highlight {
+        active-color "#8d8768"
+        urgent-color "#b17c57"
+    }
+}
