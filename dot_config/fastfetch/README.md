@@ -25,7 +25,7 @@
 ### 显示模块
 
 系统信息分三组显示：
-1. **系统信息**：OS、Kernel、Uptime、Packages、Shell、Terminal、DE、WM、WM Theme
+1. **系统信息**：OS、Kernel、Uptime、Packages、Shell、Terminal、Display、DE、WM、WM Theme
 2. **硬件信息**：Host、CPU、GPU、Memory、Disk
 3. **网络信息**：Local IP
 

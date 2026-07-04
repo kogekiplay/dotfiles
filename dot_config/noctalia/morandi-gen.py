@@ -231,6 +231,12 @@ def write_fastfetch(palette):
             '{ "type": "memory", "key": " \uf0e4 Memory" }, { "type": "disk", "key": " \uf0a0 Disk" }',
         )
 
+    if '"type": "display"' not in content:
+        content = content.replace(
+            '{ "type": "terminal", "key": " \uf120 Terminal" }',
+            '{ "type": "terminal", "key": " \uf120 Terminal" }, { "type": "display", "key": " \U000f0379 Display", "format": "({name}): {width}x{height} in {inch}\\", {refresh-rate} Hz [{type}]" }',
+        )
+
     FASTFETCH_CONFIG.write_text(content)
 
 ALACRITTY_ORIGINAL_NORMAL = {"black": "#1c1c1c", "red": "#ff6c6b", "green": "#98be65", "yellow": "#ecbe7b", "blue": "#51afef", "magenta": "#c678dd", "cyan": "#46d9ff", "white": "#bbc2cf"}
