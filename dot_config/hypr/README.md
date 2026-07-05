@@ -50,6 +50,10 @@ Noctalia greeter 自带 compositor，登录界面用 `WLR_DRM_DEVICES=/dev/dri/c
 
 `cursor.warp_on_change_workspace = false` 用来避免在外屏和内屏逻辑高度不同的布局里，切换工作区时把鼠标自动送进两个输出之间的无显示器空洞。
 
+## 窗口布局
+
+默认布局使用 Hyprland 的 `dwindle`。`smart_split = false` 加上 `force_split = 2` 让新窗口默认向右/向下分割；在常规横向工作区里表现为左右排布，避免从 Hyprspace 把窗口拖到另一个工作区后默认变成上下排布。
+
 ## Hyprland 插件
 
 Hyprbars 通过 `hyprpm` 从 `https://github.com/kogekiplay/hyprland-plugins` 安装。这个 fork 在 `hyprbars` 里补了当前 Hyprland git 的 animation manager API 变更；启动时 `hyprland.lua` 会执行 `hyprpm reload`，插件加载后 Hyprland 会自动二次读取配置。
