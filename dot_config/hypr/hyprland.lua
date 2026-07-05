@@ -14,15 +14,20 @@ local function bind(keys, command, opts)
     return hl.bind(keys, sh(command), opts)
 end
 
-local configure_hyprspace
-
-local function toggle_overview()
-    if configure_hyprspace then
-        configure_hyprspace()
+local function hyprspace_api()
+    if Hyprspace and Hyprspace.overview then
+        return Hyprspace
     end
 
     if hl.plugin and hl.plugin.Hyprspace then
-        hl.plugin.Hyprspace.overview("toggle_all")
+        return hl.plugin.Hyprspace
+    end
+end
+
+local function toggle_overview()
+    local api = hyprspace_api()
+    if api then
+        api.overview("toggle_all")
     else
         hl.exec_cmd("hyprpm reload")
     end
@@ -146,124 +151,9 @@ hl.config({
     },
 })
 
-local function configure_hyprbars()
-    if not (hl.plugin and hl.plugin.hyprbars) then
-        return
-    end
-
-    hl.config({
-        plugin = {
-            hyprbars = {
-                enabled = true,
-                bar_color = 0xee202124,
-                bar_height = 28,
-                bar_blur = true,
-                bar_title_enabled = true,
-                bar_text_size = 11,
-                bar_text_weight = 500,
-                bar_text_font = "Sans",
-                bar_text_align = "center",
-                bar_buttons_alignment = "left",
-                bar_part_of_window = true,
-                bar_precedence_over_border = true,
-                bar_padding = 10,
-                bar_button_padding = 7,
-                icon_on_hover = true,
-                inactive_button_color = 0x44ffffff,
-                on_double_click = "hyprctl dispatch fullscreen 1",
-            },
-        },
-    })
-
-    hl.plugin.hyprbars.add_button({
-        bg_color = "rgb(ff5f57)",
-        fg_color = "rgb(2b2b2b)",
-        size = 11,
-        icon = "x",
-        action = "hyprctl dispatch killactive",
-    })
-
-    hl.plugin.hyprbars.add_button({
-        bg_color = "rgb(ffbd2e)",
-        fg_color = "rgb(2b2b2b)",
-        size = 11,
-        icon = "-",
-        action = "hyprctl dispatch movetoworkspacesilent special:minimized",
-    })
-
-    hl.plugin.hyprbars.add_button({
-        bg_color = "rgb(28c840)",
-        fg_color = "rgb(2b2b2b)",
-        size = 11,
-        icon = "+",
-        action = "hyprctl dispatch fullscreen 1",
-    })
+local function configure_plugins_later()
+    hl.exec_cmd("sh -lc 'sleep 1; /home/kogeki/.local/bin/configure-hypr-plugins'")
 end
-
-configure_hyprspace = function()
-    if not (hl.plugin and hl.plugin.Hyprspace) then
-        return
-    end
-
-    hl.config({
-        plugin = {
-            hyprspace = {
-                overview_background_color = 0x22000000,
-                panel_height = 180,
-                panel_border_width = 0,
-                workspace_margin = 12,
-                reserved_area = 0,
-                workspace_border_size = 1,
-                workspace_preview_crop_top = 82,
-                center_aligned = true,
-                on_bottom = false,
-                hide_background_layers = false,
-                hide_top_layers = true,
-                hide_overlay_layers = false,
-                draw_active_workspace = true,
-                hide_real_layers = true,
-                keep_real_layer_namespaces = "noctalia-dock",
-                affect_strut = true,
-                override_gaps = true,
-                gaps_in = 20,
-                gaps_out = 60,
-                auto_drag = true,
-                auto_scroll = true,
-                exit_on_click = true,
-                switch_on_drop = false,
-                exit_on_switch = false,
-                show_new_workspace = true,
-                show_empty_workspace = false,
-                show_special_workspace = false,
-                disable_gestures = false,
-                reverse_swipe = false,
-                swipe_fingers = 3,
-                swipe_distance = 300,
-                swipe_force_speed = 30,
-                swipe_cancel_ratio = 0.5,
-                swipe_threshold = 10.0,
-                swipe_closed_padding = 10.0,
-                workspace_scroll_speed = 2.0,
-                disable_blur = false,
-                override_anim_speed = 0.0,
-                drag_alpha = 0.2,
-                exit_key = "Escape",
-                click_release_threshold_ms = 200,
-            },
-        },
-    })
-end
-
-local function configure_plugins()
-    configure_hyprbars()
-    configure_hyprspace()
-end
-
-local function schedule_configure_plugins()
-    hl.timer(configure_plugins, { timeout = 250, type = "oneshot" })
-end
-
-configure_plugins()
 
 hl.gesture({
     fingers = 3,
@@ -303,7 +193,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE")
     hl.exec_cmd("systemctl --user start hyprpolkitagent.service")
     hl.exec_cmd("hyprpm reload")
-    schedule_configure_plugins()
+    configure_plugins_later()
     sync_lid_display_mode()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
@@ -311,7 +201,10 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("sh -lc 'sleep 1; noctalia msg templates-apply'")
 end)
 
-hl.on("config.reloaded", sync_lid_display_mode)
+hl.on("config.reloaded", function()
+    configure_plugins_later()
+    sync_lid_display_mode()
+end)
 hl.on("monitor.added", sync_lid_display_mode)
 hl.on("monitor.removed", sync_lid_display_mode)
 

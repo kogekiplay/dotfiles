@@ -1,0 +1,18 @@
+#!/bin/sh
+set -eu
+
+case "${1:-}" in
+    close)
+        hyprctl dispatch 'hl.dsp.window.close()'
+        ;;
+    minimize)
+        hyprctl dispatch 'hl.dsp.window.move({ workspace = "special:minimized", follow = false })'
+        ;;
+    maximize)
+        hyprctl dispatch 'hl.dsp.window.fullscreen({ mode = "maximized" })'
+        ;;
+    *)
+        echo "usage: hyprbar-window-action close|minimize|maximize" >&2
+        exit 64
+        ;;
+esac
