@@ -3,7 +3,7 @@
 这是 kogeki 的 Hyprland + Noctalia 5 配置。当前目标是尽量还原 macOS 外接 5K 屏体验：
 
 - 外接 `27GX-Ultra`：`HDMI-A-1`，`5120x2880@165`，`scale = 2`，10-bit framebuffer，加载 ICC。
-- 内置屏：`eDP-1`，`2560x1600@165`，`scale = 1.6`，位于外接屏右侧并与外接屏底部对齐，减少鼠标进入无显示器空洞的机会。
+- 内置屏：`eDP-1`，`2560x1600@165`，`scale = 1.6`，位于外接屏右侧并顶部对齐，方便从外屏右侧进入内屏。
 - Noctalia 负责顶栏、launcher、window switcher、控制中心、锁屏和截图入口；Hyprbars 给普通窗口提供 mac 风格左侧红黄绿标题栏按钮；Hyprspace 提供类似 macOS Mission Control 的工作区总览。
 - `Super` 按键按 macOS 的 Command 使用，`Alt` 按 Option 使用。
 - 登录界面使用 `greetd` + `noctalia-greeter-git`，默认 `kogeki` 和 `Hyprland (uwsm-managed)`，并在 `HDMI-A-1` 与 `eDP-1` 各显示一份登录框。
@@ -40,11 +40,11 @@
 
 `icc/27GX-Ultra.icc` 来自 macOS 为这台外接显示器保存的 ColorSync profile。Hyprland 通过 monitor 配置原生加载该 ICC，不再使用 `dispwin` 之类的绕路方案。macOS 导出的 profile 带有 Hyprland 当前不支持的 VCGT formula tag，所以 `render.icc_vcgt_enabled = false`，只使用 ICC profile 本体，避免启动时报 `VCGT formula type is not supported`。
 
-`AQ_DRM_DEVICES` 同时记录在 `~/.config/environment.d/70-hyprland-gpu.conf`；远端安装时还会写入 `/etc/environment`，确保 Hyprland 进程启动前就能读到 GPU 顺序。
+`AQ_DRM_DEVICES=/dev/dri/card2:/dev/dri/card1` 同时记录在 `~/.config/environment.d/70-hyprland-gpu.conf`；远端安装时还会写入 `/etc/environment`，确保 Hyprland 进程启动前就能读到 GPU 顺序。这里让 AMD 内屏 GPU 优先渲染，避免内置 `eDP-1` 在 NVIDIA 优先时因为跨 GPU buffer import 卡住；外接 5K 屏仍通过 monitor 配置和 workspace rule 保持为主输出。
 
-Noctalia greeter 自带 compositor，登录界面用 `WLR_DRM_DEVICES=/dev/dri/card2:/dev/dri/card1` 让 AMD 内屏 GPU 优先，从而同时启用内外屏；Hyprland 会话的 5K@165、ICC、10-bit 和 NVIDIA 外接屏优先设置仍以 `hyprland.lua` 与 `AQ_DRM_DEVICES` 为准。
+Noctalia greeter 自带 compositor，登录界面用 `WLR_DRM_DEVICES=/dev/dri/card2:/dev/dri/card1` 让 AMD 内屏 GPU 优先，从而同时启用内外屏；Hyprland 会话的 5K@165、ICC、10-bit 和外接屏主输出设置仍以 `hyprland.lua` 为准。
 
-合盖时 `~/.local/bin/hypr-lid-display-mode` 会把 `eDP-1` 禁用，只保留外接 `HDMI-A-1`；开盖时恢复 `eDP-1` 到 `2560x1600@165`、`scale = 1.6`、`position = 2560x440`。如果没有检测到外接屏，脚本不会禁用内屏。脚本还会检查 Noctalia 的 bar layer，缺失时自动重启 Noctalia，避免外屏只剩鼠标。
+合盖时 `~/.local/bin/hypr-lid-display-mode` 会把 `eDP-1` 禁用，只保留外接 `HDMI-A-1`；开盖时恢复 `eDP-1` 到 `2560x1600@165`、`scale = 1.6`、`position = 2560x0`。如果没有检测到外接屏，脚本不会禁用内屏。脚本还会检查 Noctalia 的 bar layer，缺失时自动重启 Noctalia，避免外屏只剩鼠标。
 
 `cursor.warp_on_change_workspace = false` 用来避免在外屏和内屏逻辑高度不同的布局里，切换工作区时把鼠标自动送进两个输出之间的无显示器空洞。
 

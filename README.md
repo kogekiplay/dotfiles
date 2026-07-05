@@ -73,11 +73,11 @@ Sparkle 从上游 release 包单独安装，代理配置和订阅不纳入本仓
 vt = 1
 
 [default_session]
-command = "env WLR_DRM_DEVICES=/dev/dri/card2:/dev/dri/card1 AQ_DRM_DEVICES=/dev/dri/card1:/dev/dri/card2 XCURSOR_THEME=Bibata-Modern-Ice XCURSOR_SIZE=24 /usr/bin/noctalia-greeter-session -- --session 'Hyprland (uwsm-managed)' --user kogeki"
+command = "env WLR_DRM_DEVICES=/dev/dri/card2:/dev/dri/card1 AQ_DRM_DEVICES=/dev/dri/card2:/dev/dri/card1 XCURSOR_THEME=Bibata-Modern-Ice XCURSOR_SIZE=24 /usr/bin/noctalia-greeter-session -- --session 'Hyprland (uwsm-managed)' --user kogeki"
 user = "greeter"
 ```
 
-这里的 `WLR_DRM_DEVICES` 只给 Noctalia Greeter 自带 compositor 使用，AMD 内屏 GPU 要放前面，才能让内外屏各显示一份 greeter；`AQ_DRM_DEVICES` 仍保留 NVIDIA 外接屏优先，给登录后的 Hyprland/Noctalia 会话使用。
+这里的 `WLR_DRM_DEVICES` 只给 Noctalia Greeter 自带 compositor 使用；`AQ_DRM_DEVICES` 给登录后的 Hyprland/Aquamarine 使用。两者都把 AMD 内屏 GPU 放在前面，避免内置 eDP 面板在 NVIDIA 优先渲染时出现跨 GPU buffer import 卡死；外接 5K 屏仍由 Hyprland monitor 配置和 workspace rule 保持为主输出。
 
 `/var/lib/noctalia-greeter/greeter.toml`:
 

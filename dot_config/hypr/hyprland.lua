@@ -22,7 +22,8 @@ local function toggle_overview()
     end
 end
 
--- Make the NVIDIA-driven 5K monitor the primary output.
+-- Keep the NVIDIA-driven 5K monitor as the primary output.
+-- AQ_DRM_DEVICES starts with AMD so the built-in eDP panel does not freeze.
 hl.monitor({
     output = "HDMI-A-1",
     mode = "5120x2880@165",
@@ -36,7 +37,7 @@ hl.monitor({
 hl.monitor({
     output = "eDP-1",
     mode = "2560x1600@165",
-    position = "2560x440",
+    position = "2560x0",
     scale = 1.6,
 })
 
