@@ -126,7 +126,7 @@ hl.config({
     },
 
     cursor = {
-        warp_on_change_workspace = true,
+        warp_on_change_workspace = false,
     },
 
     misc = {

@@ -46,6 +46,8 @@ Noctalia greeter 自带 compositor，登录界面用 `WLR_DRM_DEVICES=/dev/dri/c
 
 合盖时 `~/.local/bin/hypr-lid-display-mode` 会把 `eDP-1` 禁用，只保留外接 `HDMI-A-1`；开盖时恢复 `eDP-1` 到 `2560x1600@165`、`scale = 1.6`。如果没有检测到外接屏，脚本不会禁用内屏。脚本还会检查 Noctalia 的 bar layer，缺失时自动重启 Noctalia，避免外屏只剩鼠标。
 
+`cursor.warp_on_change_workspace = false` 用来避免在外屏和内屏逻辑高度不同的布局里，切换工作区时把鼠标自动送进两个输出之间的无显示器空洞。
+
 ## Hyprland 插件
 
 Hyprbars 通过 `hyprpm` 从 `https://github.com/kogekiplay/hyprland-plugins` 安装。这个 fork 在 `hyprbars` 里补了当前 Hyprland git 的 animation manager API 变更；启动时 `hyprland.lua` 会执行 `hyprpm reload`，插件加载后 Hyprland 会自动二次读取配置。
