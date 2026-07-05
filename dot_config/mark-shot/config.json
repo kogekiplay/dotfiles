@@ -86,8 +86,8 @@
         "timeoutSeconds": 60
     },
     "windowDetection": {
-        "command": "mark-shot-window-detection-niri",
-        "enabled": true,
+        "command": "",
+        "enabled": false,
         "env": {
         },
         "timeoutMs": 1000
@@ -101,4 +101,3 @@
         }
     }
 }
-

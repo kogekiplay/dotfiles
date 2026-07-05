@@ -1,10 +1,10 @@
 # kogeki Arch Dotfiles
 
-这是 kogeki 的 Arch Linux 个人 dotfiles 仓库，使用 [chezmoi](https://www.chezmoi.io/) 管理。当前版本基于 LanRhyme 的 niri + Noctalia 配置改造，面向原生 Arch Linux、用户 `kogeki`、Noctalia 5、Sparkle 独立代理，以及 ASUS TUF Gaming A14 这台机器。
+这是 kogeki 的 Arch Linux 个人 dotfiles 仓库，使用 [chezmoi](https://www.chezmoi.io/) 管理。当前版本基于 LanRhyme 的 Noctalia 配置改造，面向原生 Arch Linux、Hyprland、用户 `kogeki`、Noctalia 5、Sparkle 独立代理，以及 ASUS TUF Gaming A14 这台机器。
 
 ## 管理范围
 
-- niri Wayland 合成器配置，以及 Noctalia shell 集成
+- Hyprland Wayland 合成器配置，以及 Noctalia shell 集成
 - Noctalia 5 TOML 配置和莫兰迪壁纸取色脚本
 - Kando 的 Wayland 启动包装和菜单配置
 - fcitx5/Rime、GTK/Qt、Alacritty、Starship、Fastfetch、btop、cava、micro、nvim、superfile 等用户配置
@@ -37,7 +37,8 @@ chezmoi init --apply kogekiplay/dotfiles
 
 ```bash
 sudo pacman -S --needed \
-  niri xwayland-satellite polkit-gnome \
+  hyprland-git xdg-desktop-portal-hyprland-git hyprpolkitagent \
+  hyprpaper hypridle hyprlock hyprsunset hyprpicker hyprshot \
   fish starship alacritty neovim micro fastfetch btop cava superfile \
   fcitx5 fcitx5-rime fcitx5-configtool fcitx5-gtk fcitx5-qt \
   firefox nautilus cliphist wl-clipboard grim slurp swappy \
@@ -75,5 +76,6 @@ systemctl --user enable --now ydotool.service
 ## 说明
 
 - Noctalia 的壁纸 hook 会运行 `~/.config/noctalia/apply-morandi.sh`。
-- `morandi-gen.py` 会根据当前壁纸更新 niri、fcitx5、starship、fastfetch、alacritty、cava 以及 Qt/KDE 色彩方案。
+- Hyprland 会原生加载外接 `27GX-Ultra` 的 ICC，并固定为 5K@165、scale 2、10-bit。
+- `morandi-gen.py` 会根据当前壁纸更新 fcitx5、starship、fastfetch、alacritty、cava 以及 Qt/KDE 色彩方案。
 - Kando 的 Krita 快捷菜单依赖 `ydotool` 用户服务。

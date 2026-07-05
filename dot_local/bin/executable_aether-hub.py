@@ -516,18 +516,18 @@ class AppHiderPage(QWidget):
         visible = total - hidden_count
         self.status.setText(f"显示 {visible} 个应用 · 隐藏 {hidden_count} 个 · 共 {total} 个")
 
-class NiriConfigPage(QWidget):
+class HyprlandConfigPage(QWidget):
     def __init__(self):
         super().__init__()
         layout = QVBoxLayout(self)
         layout.setContentsMargins(32, 32, 32, 32)
         layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         
-        title = QLabel("Niri 窗口管理器配置")
+        title = QLabel("Hyprland 窗口管理器配置")
         title.setStyleSheet(f"color: {FG}; font-size: 26px; font-weight: bold; background: transparent;")
         layout.addWidget(title)
         
-        subtitle = QLabel("快速定位并编辑 ~/.config/niri 目录下的模块化配置文件。保存文件后 Niri 会自动应用更改。")
+        subtitle = QLabel("快速定位并编辑 ~/.config/hypr 目录下的配置文件。保存文件后可通过常用工具页重载 Hyprland。")
         subtitle.setStyleSheet(f"color: {FG_MUTED}; font-size: 13px; background: transparent;")
         layout.addWidget(subtitle)
         
@@ -538,17 +538,10 @@ class NiriConfigPage(QWidget):
         grid.setSpacing(16)
         
         configs = [
-            ("主配置文件", "config.kdl", "preferences-system"),
-            ("自启动应用", "cfg/autostart.kdl", "system-run"),
-            ("快捷键映射", "cfg/keybinds.kdl", "preferences-desktop-keyboard"),
-            ("输入设备", "cfg/input.kdl", "preferences-desktop-mouse"),
-            ("显示与屏幕", "cfg/display.kdl", "preferences-desktop-display"),
-            ("窗口布局", "cfg/layout.kdl", "view-grid"),
-            ("窗口规则", "cfg/rules.kdl", "preferences-system-windows"),
-            ("动画与特效", "cfg/animation.kdl", "applications-multimedia"),
-            ("颜色主题", "cfg/colors.kdl", "preferences-desktop-color"),
-            ("其他高级设置", "cfg/misc.kdl", "preferences-other"),
-            ("专属定制配置", "noctalia.kdl", "preferences-other")
+            ("主配置文件", "hyprland.lua", "preferences-system"),
+            ("Noctalia 主题片段", "noctalia.lua", "preferences-desktop-color"),
+            ("外接屏 ICC", "icc/27GX-Ultra.icc", "preferences-desktop-display"),
+            ("配置说明", "README.md", "help-about")
         ]
         
         row, col = 0, 0
@@ -596,7 +589,7 @@ class NiriConfigPage(QWidget):
         h.addLayout(v, 1)
         
         def open_file(e, rp=rel_path):
-            full_path = os.path.expanduser(f"~/.config/niri/{rp}")
+            full_path = os.path.expanduser(f"~/.config/hypr/{rp}")
             if not os.path.exists(os.path.dirname(full_path)):
                 os.makedirs(os.path.dirname(full_path), exist_ok=True)
             if not os.path.exists(full_path):
@@ -628,7 +621,8 @@ class QuickActionsPage(QWidget):
         grid.setSpacing(16)
         
         actions = [
-            ("重载 Niri 配置", "niri msg action reload-config", "view-refresh"),
+            ("重载 Hyprland 配置", "hyprctl reload", "view-refresh"),
+            ("重载 Noctalia 配置", "noctalia msg config-reload && noctalia msg templates-apply", "preferences-desktop-theme"),
             ("重载 Fcitx5 输入法", "fcitx5-remote -r || fcitx5 -r -d", "preferences-desktop-keyboard"),
             ("重启 Shell/UI 环境", "export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$(id -u)} WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-1}; pkill -x noctalia || true; sleep 0.3; nohup noctalia -d >/tmp/noctalia-restart.log 2>&1 &", "system-run")
         ]
@@ -753,17 +747,17 @@ class AetherHubWindow(QMainWindow):
         main_layout.addWidget(self.stacked, 1)
         
         self.app_hider_page = AppHiderPage()
-        self.niri_page = NiriConfigPage()
+        self.hyprland_page = HyprlandConfigPage()
         self.actions_page = QuickActionsPage()
         
         self.stacked.addWidget(self.app_hider_page)
-        self.stacked.addWidget(self.niri_page)
+        self.stacked.addWidget(self.hyprland_page)
         self.stacked.addWidget(self.actions_page)
         
         self.sidebar.pageChanged.connect(self.stacked.setCurrentIndex)
         
         self.sidebar.add_page("应用可见性", active=True)
-        self.sidebar.add_page("Niri 窗口管理器")
+        self.sidebar.add_page("Hyprland 窗口管理器")
         self.sidebar.add_page("常用工具操作")
         self.sidebar.finish_setup()
 

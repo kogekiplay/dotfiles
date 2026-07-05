@@ -2,9 +2,9 @@
 
 User scripts installed to `~/.local/bin`.
 
-## `kando-niri.sh`
+## `kando-wayland.sh`
 
-Starts Kando with Wayland-friendly Electron settings for niri.
+Starts Kando with Wayland-friendly Electron settings.
 
 ## `aether-hub.py`
 

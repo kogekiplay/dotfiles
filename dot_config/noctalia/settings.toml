@@ -331,7 +331,6 @@ font_family = "sans-serif"
 launch_apps_as_systemd_services = false
 launch_apps_custom_command = ""
 middle_click_opens_widget_settings = true
-niri_overview_type_to_launch_enabled = false
 offline_mode = false
 password_style = "default"
 polkit_agent = false
@@ -500,7 +499,7 @@ source = "builtin"
 wallpaper_scheme = "m3-content"
 
     [theme.templates]
-    builtin_ids = []
+    builtin_ids = [ "hyprland" ]
     community_ids = []
     enable_builtin_templates = true
     enable_community_templates = true

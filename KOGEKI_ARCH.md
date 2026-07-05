@@ -7,7 +7,7 @@ This fork tracks LanRhyme's desktop style as upstream inspiration, but the activ
 - User: `kogeki`
 - Home: `/home/kogeki`
 - OS: plain Arch Linux
-- Session: niri + Noctalia 5
+- Session: Hyprland + Noctalia 5
 - Proxy: Sparkle, managed outside dotfiles
 
 ## Important Choices
@@ -16,7 +16,7 @@ This fork tracks LanRhyme's desktop style as upstream inspiration, but the activ
 - Wallpaper assets apply to `~/Pictures/WallPapers`
 - The Morandi hook does not write proxy client state or bootloader artwork
 - Runtime state, credentials, paired devices, and generated caches are excluded
-- Kando uses `~/.local/bin/kando-niri.sh` for Wayland-friendly Electron startup
+- Kando uses `~/.local/bin/kando-wayland.sh` for Wayland-friendly Electron startup
 
 ## Post-Apply Commands
 
