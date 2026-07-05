@@ -52,4 +52,4 @@ Noctalia greeter 自带 compositor，登录界面用 `WLR_DRM_DEVICES=/dev/dri/c
 
 Hyprbars 通过 `hyprpm` 从 `https://github.com/kogekiplay/hyprland-plugins` 安装。这个 fork 在 `hyprbars` 里补了当前 Hyprland git 的 animation manager API 变更；启动时 `hyprland.lua` 会执行 `hyprpm reload`，插件加载后 Hyprland 会自动二次读取配置。
 
-Hyprspace 通过 `hyprpm` 从 `https://github.com/kogekiplay/Hyprspace` 安装。这个 fork 基于 0xl30 的 Lua 配置版本，并补了当前 `hyprland-git` 的 state、monitor、pointer 和 animation API 变更。当前快捷键为 `Ctrl+Up` 和 `F3` 打开/关闭全部显示器的 overview，`Ctrl+Down` 保留给 Noctalia Launcher。
+Hyprspace 通过 `hyprpm` 从 `https://github.com/kogekiplay/Hyprspace` 安装。这个 fork 基于 0xl30 的 Lua 配置版本，并补了当前 `hyprland-git` 的 state、monitor、pointer 和 animation API 变更。`hyprland.lua` 会显式设置 `plugin.hyprspace.affect_strut = true` 和 `hide_real_layers = true`，让 overview 恢复 upstream demo 里“顶部 workspace strip + 下方窗口让位重排”的效果。当前快捷键为 `Ctrl+Up` 和 `F3` 打开/关闭全部显示器的 overview，`Ctrl+Down` 保留给 Noctalia Launcher。

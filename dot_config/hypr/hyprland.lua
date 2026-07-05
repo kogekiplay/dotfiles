@@ -14,7 +14,13 @@ local function bind(keys, command, opts)
     return hl.bind(keys, sh(command), opts)
 end
 
+local configure_hyprspace
+
 local function toggle_overview()
+    if configure_hyprspace then
+        configure_hyprspace()
+    end
+
     if hl.plugin and hl.plugin.Hyprspace then
         hl.plugin.Hyprspace.overview("toggle_all")
     else
@@ -193,7 +199,64 @@ local function configure_hyprbars()
     })
 end
 
-configure_hyprbars()
+configure_hyprspace = function()
+    if not (hl.plugin and hl.plugin.Hyprspace) then
+        return
+    end
+
+    hl.config({
+        plugin = {
+            hyprspace = {
+                panel_height = 250,
+                panel_border_width = 2,
+                workspace_margin = 12,
+                reserved_area = 0,
+                workspace_border_size = 1,
+                center_aligned = true,
+                on_bottom = false,
+                hide_background_layers = false,
+                hide_top_layers = false,
+                hide_overlay_layers = false,
+                draw_active_workspace = true,
+                hide_real_layers = true,
+                affect_strut = true,
+                auto_drag = true,
+                auto_scroll = true,
+                exit_on_click = true,
+                switch_on_drop = false,
+                exit_on_switch = false,
+                show_new_workspace = true,
+                show_empty_workspace = true,
+                show_special_workspace = false,
+                disable_gestures = false,
+                reverse_swipe = false,
+                swipe_fingers = 3,
+                swipe_distance = 300,
+                swipe_force_speed = 30,
+                swipe_cancel_ratio = 0.5,
+                swipe_threshold = 10.0,
+                swipe_closed_padding = 10.0,
+                workspace_scroll_speed = 2.0,
+                disable_blur = false,
+                override_anim_speed = 0.0,
+                drag_alpha = 0.2,
+                exit_key = "Escape",
+                click_release_threshold_ms = 200,
+            },
+        },
+    })
+end
+
+local function configure_plugins()
+    configure_hyprbars()
+    configure_hyprspace()
+end
+
+local function schedule_configure_plugins()
+    hl.timer(configure_plugins, { timeout = 250, type = "oneshot" })
+end
+
+configure_plugins()
 
 hl.gesture({
     fingers = 3,
@@ -222,6 +285,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE")
     hl.exec_cmd("systemctl --user start hyprpolkitagent.service")
     hl.exec_cmd("hyprpm reload")
+    schedule_configure_plugins()
     sync_lid_display_mode()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
