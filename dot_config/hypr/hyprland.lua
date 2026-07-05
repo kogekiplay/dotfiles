@@ -279,6 +279,17 @@ hl.animation({ leaf = "fade", enabled = true, speed = 3.0, bezier = "quick" })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 4.0, spring = "smooth", style = "slide" })
 hl.animation({ leaf = "layers", enabled = true, speed = 4.0, spring = "smooth" })
 
+hl.layer_rule({
+    name = "noctalia-surfaces",
+    match = {
+        namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd)$",
+    },
+    no_anim = true,
+    ignore_alpha = 0.5,
+    blur = true,
+    blur_popups = true,
+})
+
 local function sync_lid_display_mode()
     hl.exec_cmd("/home/kogeki/.local/bin/hypr-lid-display-mode auto")
 end

@@ -5,6 +5,7 @@
 - 外接 `27GX-Ultra`：`HDMI-A-1`，`5120x2880@165`，`scale = 2`，10-bit framebuffer，加载 ICC。
 - 内置屏：`eDP-1`，`2560x1600@165`，`scale = 1.6`，位于外接屏右侧并顶部对齐，方便从外屏右侧进入内屏。
 - Noctalia 负责顶栏、launcher、window switcher、控制中心、锁屏和截图入口；Hyprbars 给普通窗口提供 mac 风格左侧红黄绿标题栏按钮；Hyprspace 提供类似 macOS Mission Control 的工作区总览。
+- Noctalia Dock 开在所有输出底部，保留 macOS 风格放大效果、运行应用显示和常用应用固定入口。
 - `Super` 按键按 macOS 的 Command 使用，`Alt` 按 Option 使用。
 - 登录界面使用 `greetd` + `noctalia-greeter-git`，默认 `kogeki` 和 `Hyprland (uwsm-managed)`，并在 `HDMI-A-1` 与 `eDP-1` 各显示一份登录框。
 - `1..9` 保留外屏归属规则，其中 `2` 常驻作为快速回到空桌面的缓冲区；其他空工作区切换过去时再按需创建。
