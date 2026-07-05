@@ -9,7 +9,3 @@ Starts Kando with Wayland-friendly Electron settings for niri.
 ## `aether-hub.py`
 
 Small PyQt6 desktop utility for managing visible `.desktop` app entries.
-
-## `load-27gx-icc.sh`
-
-Loads the 27GX-Ultra ICC profile calibration through ArgyllCMS `dispwin`.

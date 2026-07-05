@@ -1,45 +1,43 @@
 # kogeki Arch Dotfiles
 
-Personal Arch Linux dotfiles managed by [chezmoi](https://www.chezmoi.io/). This fork is based on LanRhyme's niri + Noctalia setup, then trimmed for plain Arch Linux, `kogeki`, Noctalia 5, Sparkle-managed proxy, and the ASUS TUF Gaming A14 install.
+这是 kogeki 的 Arch Linux 个人 dotfiles 仓库，使用 [chezmoi](https://www.chezmoi.io/) 管理。当前版本基于 LanRhyme 的 niri + Noctalia 配置改造，面向原生 Arch Linux、用户 `kogeki`、Noctalia 5、Sparkle 独立代理，以及 ASUS TUF Gaming A14 这台机器。
 
-## Scope
+## 管理范围
 
-- niri Wayland compositor config with Noctalia shell integration
-- Noctalia 5 TOML config and Morandi wallpaper color hook
-- Kando Wayland wrapper and menu config
-- fcitx5/Rime, GTK/Qt, Alacritty, Starship, Fastfetch, btop, cava, micro, nvim, and superfile settings
-- Wallpaper assets under `~/Pictures/WallPapers`
-- Display ICC profile assets under `~/.local/share/color/icc`
+- niri Wayland 合成器配置，以及 Noctalia shell 集成
+- Noctalia 5 TOML 配置和莫兰迪壁纸取色脚本
+- Kando 的 Wayland 启动包装和菜单配置
+- fcitx5/Rime、GTK/Qt、Alacritty、Starship、Fastfetch、btop、cava、micro、nvim、superfile 等用户配置
+- `~/Pictures/WallPapers` 下的壁纸资源
 
-## Excluded
+## 不管理的内容
 
-- Proxy client configuration and subscriptions
-- GitHub CLI credentials
-- KDE Connect paired devices
-- OpenCode/private agent configs
-- CachyOS-specific configs
-- Runtime caches and Electron session state
-- Auto-push dotfiles sync scripts
+- 代理客户端配置、订阅和运行状态
+- GitHub CLI 凭据
+- KDE Connect 配对设备
+- OpenCode 或其他私有 agent 配置
+- CachyOS 专用配置
+- 运行时缓存和 Electron 会话状态
+- 自动同步或自动推送 dotfiles 的脚本
 
-## Apply
+## 应用配置
 
 ```bash
 sudo pacman -S --needed chezmoi git
 chezmoi init --apply kogekiplay/dotfiles
 ```
 
-For this laptop, the source lives at:
+这台电脑上的 chezmoi 源仓库位于：
 
 ```bash
 ~/.local/share/chezmoi
 ```
 
-## Key Packages
+## 关键软件包
 
 ```bash
 sudo pacman -S --needed \
   niri xwayland-satellite polkit-gnome \
-  colord argyllcms \
   fish starship alacritty neovim micro fastfetch btop cava superfile \
   fcitx5 fcitx5-rime fcitx5-configtool fcitx5-gtk fcitx5-qt \
   firefox nautilus cliphist wl-clipboard grim slurp swappy \
@@ -47,23 +45,23 @@ sudo pacman -S --needed \
   ydotool
 ```
 
-AUR/third-party packages used on this install:
+本机用到的 AUR/第三方包：
 
 ```bash
 yay -S --needed noctalia-git kando-bin bibata-cursor-theme-bin
 ```
 
-Arch Linux CN packages used on this install:
+本机用到的 Arch Linux CN 包：
 
 ```bash
 sudo pacman -S --needed rime-ice-pinyin-git
 ```
 
-Sparkle is installed separately from its upstream release package and is intentionally not managed here.
+Sparkle 从上游 release 包单独安装，代理配置和订阅不纳入本仓库管理。
 
-## System Setup
+## 系统设置
 
-`ydotool` needs `/dev/uinput` writable by the `input` group. Configure it once:
+`ydotool` 需要让 `input` 组可以写入 `/dev/uinput`。首次配置时执行：
 
 ```bash
 sudo usermod -aG input kogeki
@@ -72,12 +70,10 @@ sudo systemd-tmpfiles --create /etc/tmpfiles.d/uinput.conf
 systemctl --user enable --now ydotool.service
 ```
 
-Log out and back in after changing group membership.
+修改用户组后需要注销并重新登录。
 
-## Notes
+## 说明
 
-- Noctalia's wallpaper hook runs `~/.config/noctalia/apply-morandi.sh`.
-- `morandi-gen.py` updates colors for niri, fcitx5, starship, fastfetch, alacritty, cava, and Qt/KDE color schemes.
-- Kando's Krita key menus use the `ydotool` user service.
-- `~/.local/share/color/icc/27GX-Ultra.icc` is the ColorSync profile copied from macOS for the external 27GX-Ultra display. To follow the Arch Wiki colord layout after applying dotfiles, copy it system-wide with `sudo install -D -m 0644 ~/.local/share/color/icc/27GX-Ultra.icc /usr/share/color/icc/colord/27GX-Ultra.icc && sudo systemctl restart colord.service`.
-- niri 26.04 does not expose a compositor ICC output-profile setting or a colord display device. `~/.local/bin/load-27gx-icc.sh` uses ArgyllCMS `dispwin -d 1 -I` at niri startup to install the profile into the X11-compatible display profile location and load its VCGT calibration into the external display LUT.
+- Noctalia 的壁纸 hook 会运行 `~/.config/noctalia/apply-morandi.sh`。
+- `morandi-gen.py` 会根据当前壁纸更新 niri、fcitx5、starship、fastfetch、alacritty、cava 以及 Qt/KDE 色彩方案。
+- Kando 的 Krita 快捷菜单依赖 `ydotool` 用户服务。
