@@ -51,6 +51,7 @@ for i = 1, 9 do
     hl.workspace_rule({
         workspace = tostring(i),
         monitor = "HDMI-A-1",
+        persistent = i == 2,
     })
 end
 

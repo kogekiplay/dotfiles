@@ -7,7 +7,7 @@
 - Noctalia 负责顶栏、launcher、window switcher、控制中心、锁屏和截图入口；Hyprbars 给普通窗口提供 mac 风格左侧红黄绿标题栏按钮；Hyprspace 提供类似 macOS Mission Control 的工作区总览。
 - `Super` 按键按 macOS 的 Command 使用，`Alt` 按 Option 使用。
 - 登录界面使用 `greetd` + `noctalia-greeter-git`，默认 `kogeki` 和 `Hyprland (uwsm-managed)`，并在 `HDMI-A-1` 与 `eDP-1` 各显示一份登录框。
-- `1..9` 只保留外屏归属规则，不设置 persistent；空工作区不会常驻，切换过去时再按需创建。
+- `1..9` 保留外屏归属规则，其中 `2` 常驻作为快速回到空桌面的缓冲区；其他空工作区切换过去时再按需创建。
 
 ## 常用快捷键
 
