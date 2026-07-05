@@ -29,7 +29,7 @@ hl.monitor({
     output = "eDP-1",
     mode = "2560x1600@165",
     position = "2560x0",
-    scale = 1.5,
+    scale = 1.6,
 })
 
 for i = 1, 9 do

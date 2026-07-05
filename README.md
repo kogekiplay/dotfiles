@@ -73,9 +73,11 @@ Sparkle 从上游 release 包单独安装，代理配置和订阅不纳入本仓
 vt = 1
 
 [default_session]
-command = "env WLR_DRM_DEVICES=/dev/dri/card1:/dev/dri/card2 AQ_DRM_DEVICES=/dev/dri/card1:/dev/dri/card2 XCURSOR_THEME=Bibata-Modern-Ice XCURSOR_SIZE=24 /usr/bin/noctalia-greeter-session -- --session 'Hyprland (uwsm-managed)' --user kogeki"
+command = "env WLR_DRM_DEVICES=/dev/dri/card2:/dev/dri/card1 AQ_DRM_DEVICES=/dev/dri/card1:/dev/dri/card2 XCURSOR_THEME=Bibata-Modern-Ice XCURSOR_SIZE=24 /usr/bin/noctalia-greeter-session -- --session 'Hyprland (uwsm-managed)' --user kogeki"
 user = "greeter"
 ```
+
+这里的 `WLR_DRM_DEVICES` 只给 Noctalia Greeter 自带 compositor 使用，AMD 内屏 GPU 要放前面，才能让内外屏各显示一份 greeter；`AQ_DRM_DEVICES` 仍保留 NVIDIA 外接屏优先，给登录后的 Hyprland/Noctalia 会话使用。
 
 `/var/lib/noctalia-greeter/greeter.toml`:
 
@@ -92,7 +94,7 @@ password_style = "random"
 hide_logo = false
 
 [output]
-name = "HDMI-A-1"
+layout = "HDMI-A-1:0,0; eDP-1:2560,0"
 scale = 2.0
 
 [cursor]
