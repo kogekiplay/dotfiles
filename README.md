@@ -55,12 +55,69 @@ yay -S --needed noctalia-git kando-bin bibata-cursor-theme-bin
 本机用到的 Arch Linux CN 包：
 
 ```bash
-sudo pacman -S --needed rime-ice-pinyin-git
+sudo pacman -S --needed rime-ice-pinyin-git noctalia-greeter-git
 ```
 
 Sparkle 从上游 release 包单独安装，代理配置和订阅不纳入本仓库管理。
 
 ## 系统设置
+
+### 登录管理器
+
+登录界面使用 `greetd` + `noctalia-greeter-git`，比 `greetd-regreet` 更接近 Noctalia/Hyprland 锁屏风格。`/etc/greetd` 和 `/var/lib/noctalia-greeter` 是系统级配置，不由 chezmoi 自动接管。
+
+`/etc/greetd/config.toml`:
+
+```toml
+[terminal]
+vt = 1
+
+[default_session]
+command = "env WLR_DRM_DEVICES=/dev/dri/card1:/dev/dri/card2 AQ_DRM_DEVICES=/dev/dri/card1:/dev/dri/card2 XCURSOR_THEME=Bibata-Modern-Ice XCURSOR_SIZE=24 /usr/bin/noctalia-greeter-session -- --session 'Hyprland (uwsm-managed)' --user kogeki"
+user = "greeter"
+```
+
+`/var/lib/noctalia-greeter/greeter.toml`:
+
+```toml
+[session]
+default = "Hyprland (uwsm-managed)"
+last = "Hyprland (uwsm-managed)"
+
+[user]
+default = "kogeki"
+
+[appearance]
+password_style = "random"
+hide_logo = false
+
+[output]
+name = "HDMI-A-1"
+scale = 2.0
+
+[cursor]
+theme = "Bibata-Modern-Ice"
+size = 24
+path = "/usr/share/icons"
+
+[keyboard]
+numlock = true
+```
+
+如果需要回退到 ReGreet：
+
+```bash
+sudo pacman -S --needed greetd-regreet cage
+sudo tee /etc/greetd/config.toml >/dev/null <<'EOF'
+[terminal]
+vt = 1
+
+[default_session]
+command = "cage -s -m last -- regreet"
+user = "greeter"
+EOF
+sudo systemctl restart greetd
+```
 
 `ydotool` 需要让 `input` 组可以写入 `/dev/uinput`。首次配置时执行：
 

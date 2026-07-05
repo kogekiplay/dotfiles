@@ -6,6 +6,7 @@
 - 内置屏：`eDP-1`，`2560x1600@165`，`scale = 1.5`，位于外接屏右侧。
 - Noctalia 负责顶栏、launcher、window switcher、控制中心、锁屏和截图入口。
 - `Super` 按键按 macOS 的 Command 使用，`Alt` 按 Option 使用。
+- 登录界面使用 `greetd` + `noctalia-greeter-git`，默认 `kogeki` 和 `Hyprland (uwsm-managed)`，并固定显示在 `HDMI-A-1`。
 
 ## 常用快捷键
 
@@ -38,3 +39,5 @@
 `icc/27GX-Ultra.icc` 来自 macOS 为这台外接显示器保存的 ColorSync profile。Hyprland 通过 monitor 配置原生加载该 ICC，不再使用 `dispwin` 之类的绕路方案。
 
 `AQ_DRM_DEVICES` 同时记录在 `~/.config/environment.d/70-hyprland-gpu.conf`；远端安装时还会写入 `/etc/environment`，确保 Hyprland 进程启动前就能读到 GPU 顺序。
+
+Noctalia greeter 自带 compositor，登录界面的输出模式由 greeter 选择；Hyprland 会话的 5K@165、ICC 和 10-bit 设置仍以 `hyprland.lua` 为准。

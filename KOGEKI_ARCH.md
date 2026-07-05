@@ -8,6 +8,7 @@ This fork tracks LanRhyme's desktop style as upstream inspiration, but the activ
 - Home: `/home/kogeki`
 - OS: plain Arch Linux
 - Session: Hyprland + Noctalia 5
+- Login: greetd + `noctalia-greeter-git`, pinned to `HDMI-A-1`
 - Proxy: Sparkle, managed outside dotfiles
 
 ## Important Choices
