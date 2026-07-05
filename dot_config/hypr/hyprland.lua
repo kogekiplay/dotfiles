@@ -208,6 +208,7 @@ configure_hyprspace = function()
     hl.config({
         plugin = {
             hyprspace = {
+                overview_background_color = 0x22000000,
                 panel_height = 180,
                 panel_border_width = 0,
                 workspace_margin = 12,
