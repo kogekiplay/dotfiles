@@ -208,11 +208,12 @@ configure_hyprspace = function()
     hl.config({
         plugin = {
             hyprspace = {
-                panel_height = 250,
+                panel_height = 180,
                 panel_border_width = 0,
                 workspace_margin = 12,
                 reserved_area = 0,
                 workspace_border_size = 1,
+                workspace_preview_crop_top = 82,
                 center_aligned = true,
                 on_bottom = false,
                 hide_background_layers = false,
