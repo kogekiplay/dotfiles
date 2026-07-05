@@ -54,7 +54,7 @@ hl.config({
 
     render = {
         cm_enabled = true,
-        icc_vcgt_enabled = true,
+        icc_vcgt_enabled = false,
     },
 
     general = {

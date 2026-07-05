@@ -36,7 +36,7 @@
 
 ## 显示与颜色
 
-`icc/27GX-Ultra.icc` 来自 macOS 为这台外接显示器保存的 ColorSync profile。Hyprland 通过 monitor 配置原生加载该 ICC，不再使用 `dispwin` 之类的绕路方案。
+`icc/27GX-Ultra.icc` 来自 macOS 为这台外接显示器保存的 ColorSync profile。Hyprland 通过 monitor 配置原生加载该 ICC，不再使用 `dispwin` 之类的绕路方案。macOS 导出的 profile 带有 Hyprland 当前不支持的 VCGT formula tag，所以 `render.icc_vcgt_enabled = false`，只使用 ICC profile 本体，避免启动时报 `VCGT formula type is not supported`。
 
 `AQ_DRM_DEVICES` 同时记录在 `~/.config/environment.d/70-hyprland-gpu.conf`；远端安装时还会写入 `/etc/environment`，确保 Hyprland 进程启动前就能读到 GPU 顺序。
 
