@@ -4,7 +4,7 @@
 
 - 外接 `27GX-Ultra`：`HDMI-A-1`，`5120x2880@165`，`scale = 2`，10-bit framebuffer，加载 ICC。
 - 内置屏：`eDP-1`，`2560x1600@165`，`scale = 1.6`，位于外接屏右侧。
-- Noctalia 负责顶栏、launcher、window switcher、控制中心、锁屏和截图入口；Hyprbars 给普通窗口提供 mac 风格左侧红黄绿标题栏按钮。
+- Noctalia 负责顶栏、launcher、window switcher、控制中心、锁屏和截图入口；Hyprbars 给普通窗口提供 mac 风格左侧红黄绿标题栏按钮；Hyprspace 提供类似 macOS Mission Control 的工作区总览。
 - `Super` 按键按 macOS 的 Command 使用，`Alt` 按 Option 使用。
 - 登录界面使用 `greetd` + `noctalia-greeter-git`，默认 `kogeki` 和 `Hyprland (uwsm-managed)`，并在 `HDMI-A-1` 与 `eDP-1` 各显示一份登录框。
 
@@ -28,6 +28,8 @@
 | `Super+M` | 移到 `minimized` 特殊工作区 |
 | `Super+Ctrl+M` | 显示/隐藏 `minimized` 特殊工作区 |
 | `Ctrl+Left` / `Ctrl+Right` | 切换工作区 |
+| `Ctrl+Up` / `F3` | 打开/关闭 Hyprspace 工作区总览 |
+| `Ctrl+Down` | 打开 Noctalia Launcher |
 | `Ctrl+1..9` | 切到指定工作区 |
 | `Ctrl+Shift+1..9` | 移动窗口到指定工作区 |
 | `Super+Shift+3` | 全屏截图 |
@@ -47,3 +49,5 @@ Noctalia greeter 自带 compositor，登录界面用 `WLR_DRM_DEVICES=/dev/dri/c
 ## Hyprland 插件
 
 Hyprbars 通过 `hyprpm` 从 `https://github.com/kogekiplay/hyprland-plugins` 安装。这个 fork 在 `hyprbars` 里补了当前 Hyprland git 的 animation manager API 变更；启动时 `hyprland.lua` 会执行 `hyprpm reload`，插件加载后 Hyprland 会自动二次读取配置。
+
+Hyprspace 通过 `hyprpm` 从 `https://github.com/kogekiplay/Hyprspace` 安装。这个 fork 基于 0xl30 的 Lua 配置版本，并补了当前 `hyprland-git` 的 state、monitor、pointer 和 animation API 变更。当前快捷键为 `Ctrl+Up` 和 `F3` 打开/关闭全部显示器的 overview，`Ctrl+Down` 保留给 Noctalia Launcher。

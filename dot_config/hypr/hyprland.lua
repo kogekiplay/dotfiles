@@ -14,6 +14,14 @@ local function bind(keys, command, opts)
     return hl.bind(keys, sh(command), opts)
 end
 
+local function toggle_overview()
+    if hl.plugin and hl.plugin.Hyprspace then
+        hl.plugin.Hyprspace.overview("toggle_all")
+    else
+        hl.exec_cmd("hyprpm reload")
+    end
+end
+
 -- Make the NVIDIA-driven 5K monitor the primary output.
 hl.monitor({
     output = "HDMI-A-1",
@@ -250,8 +258,9 @@ hl.bind(main_mod .. " + CTRL + M", hl.dsp.workspace.toggle_special("minimized"))
 
 hl.bind("CTRL + LEFT", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind("CTRL + RIGHT", hl.dsp.focus({ workspace = "e+1" }))
-bind("CTRL + UP", "noctalia msg window-switcher")
+hl.bind("CTRL + UP", toggle_overview)
 bind("CTRL + DOWN", "noctalia msg panel-toggle launcher")
+hl.bind("F3", toggle_overview)
 
 for i = 1, 9 do
     hl.bind("CTRL + " .. i, hl.dsp.focus({ workspace = i }))
