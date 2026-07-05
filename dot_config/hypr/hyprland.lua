@@ -219,6 +219,7 @@ configure_hyprspace = function()
                 hide_overlay_layers = false,
                 draw_active_workspace = true,
                 hide_real_layers = true,
+                keep_real_layer_namespaces = "noctalia-dock",
                 affect_strut = true,
                 override_gaps = true,
                 gaps_in = 20,
