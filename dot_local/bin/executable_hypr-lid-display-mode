@@ -56,6 +56,20 @@ restore_internal() {
   hyprctl eval "hl.monitor({ output = \"${INTERNAL_OUTPUT}\", mode = \"${INTERNAL_MODE}\", position = \"${position}\", scale = ${INTERNAL_SCALE}, disabled = false })"
 }
 
+ensure_noctalia() {
+  sleep 0.7
+
+  if pgrep -u "$(id -u)" -x noctalia >/dev/null 2>&1; then
+    if hyprctl layers 2>/dev/null | grep -q 'noctalia-bar-default'; then
+      return 0
+    fi
+    pkill -u "$(id -u)" -x noctalia >/dev/null 2>&1 || true
+    sleep 0.5
+  fi
+
+  nohup noctalia -d >/tmp/noctalia-lid-display-mode.log 2>&1 &
+}
+
 external_only() {
   if ! connector_connected "${EXTERNAL_OUTPUT}"; then
     restore_internal
@@ -94,6 +108,8 @@ main() {
       return 2
       ;;
   esac
+
+  ensure_noctalia
 }
 
 main "$@"

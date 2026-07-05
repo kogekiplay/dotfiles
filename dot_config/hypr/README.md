@@ -42,4 +42,4 @@
 
 Noctalia greeter 自带 compositor，登录界面用 `WLR_DRM_DEVICES=/dev/dri/card2:/dev/dri/card1` 让 AMD 内屏 GPU 优先，从而同时启用内外屏；Hyprland 会话的 5K@165、ICC、10-bit 和 NVIDIA 外接屏优先设置仍以 `hyprland.lua` 与 `AQ_DRM_DEVICES` 为准。
 
-合盖时 `~/.local/bin/hypr-lid-display-mode` 会把 `eDP-1` 禁用，只保留外接 `HDMI-A-1`；开盖时恢复 `eDP-1` 到 `2560x1600@165`、`scale = 1.6`。如果没有检测到外接屏，脚本不会禁用内屏。
+合盖时 `~/.local/bin/hypr-lid-display-mode` 会把 `eDP-1` 禁用，只保留外接 `HDMI-A-1`；开盖时恢复 `eDP-1` 到 `2560x1600@165`、`scale = 1.6`。如果没有检测到外接屏，脚本不会禁用内屏。脚本还会检查 Noctalia 的 bar layer，缺失时自动重启 Noctalia，避免外屏只剩鼠标。
