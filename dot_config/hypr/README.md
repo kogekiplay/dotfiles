@@ -7,6 +7,7 @@
 - Noctalia 负责顶栏、launcher、window switcher、控制中心、锁屏和截图入口；Hyprbars 给普通窗口提供 mac 风格左侧红黄绿标题栏按钮；Hyprspace 提供类似 macOS Mission Control 的工作区总览。
 - `Super` 按键按 macOS 的 Command 使用，`Alt` 按 Option 使用。
 - 登录界面使用 `greetd` + `noctalia-greeter-git`，默认 `kogeki` 和 `Hyprland (uwsm-managed)`，并在 `HDMI-A-1` 与 `eDP-1` 各显示一份登录框。
+- `1..9` 只保留外屏归属规则，不设置 persistent；空工作区不会常驻，切换过去时再按需创建。
 
 ## 常用快捷键
 
@@ -52,4 +53,4 @@ Noctalia greeter 自带 compositor，登录界面用 `WLR_DRM_DEVICES=/dev/dri/c
 
 Hyprbars 通过 `hyprpm` 从 `https://github.com/kogekiplay/hyprland-plugins` 安装。这个 fork 在 `hyprbars` 里补了当前 Hyprland git 的 animation manager API 变更；启动时 `hyprland.lua` 会执行 `hyprpm reload`，插件加载后 Hyprland 会自动二次读取配置。
 
-Hyprspace 通过 `hyprpm` 从 `https://github.com/kogekiplay/Hyprspace` 安装。这个 fork 基于 0xl30 的 Lua 配置版本，并补了当前 `hyprland-git` 的 state、monitor、pointer 和 animation API 变更。`hyprland.lua` 会显式设置 `plugin.hyprspace.affect_strut = true` 和 `hide_real_layers = true`，让 overview 恢复 upstream demo 里“顶部 workspace strip + 下方窗口让位重排”的效果。当前快捷键为 `Ctrl+Up` 和 `F3` 打开/关闭全部显示器的 overview，`Ctrl+Down` 保留给 Noctalia Launcher。
+Hyprspace 通过 `hyprpm` 从 `https://github.com/kogekiplay/Hyprspace` 安装。这个 fork 基于 0xl30 的 Lua 配置版本，并补了当前 `hyprland-git` 的 state、monitor、pointer 和 animation API 变更。`hyprland.lua` 会显式设置 `plugin.hyprspace.affect_strut = true` 和 `hide_real_layers = true`，让 overview 恢复 upstream demo 里“顶部 workspace strip + 下方窗口让位重排”的效果；同时设置 `show_empty_workspace = false`，避免把空的数字工作区全部铺出来。当前快捷键为 `Ctrl+Up` 和 `F3` 打开/关闭全部显示器的 overview，`Ctrl+Down` 保留给 Noctalia Launcher。

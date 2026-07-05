@@ -51,7 +51,6 @@ for i = 1, 9 do
     hl.workspace_rule({
         workspace = tostring(i),
         monitor = "HDMI-A-1",
-        persistent = true,
     })
 end
 
@@ -226,7 +225,7 @@ configure_hyprspace = function()
                 switch_on_drop = false,
                 exit_on_switch = false,
                 show_new_workspace = true,
-                show_empty_workspace = true,
+                show_empty_workspace = false,
                 show_special_workspace = false,
                 disable_gestures = false,
                 reverse_swipe = false,
