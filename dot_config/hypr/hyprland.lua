@@ -148,16 +148,25 @@ hl.animation({ leaf = "fade", enabled = true, speed = 3.0, bezier = "quick" })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 4.0, spring = "smooth", style = "slide" })
 hl.animation({ leaf = "layers", enabled = true, speed = 4.0, spring = "smooth" })
 
+local function sync_lid_display_mode()
+    hl.exec_cmd("/home/kogeki/.local/bin/hypr-lid-display-mode auto")
+end
+
 hl.on("hyprland.start", function()
     hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE")
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE")
     hl.exec_cmd("systemctl --user start hyprpolkitagent.service")
+    sync_lid_display_mode()
     hl.exec_cmd("noctalia -d")
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("fcitx5 -d")
     hl.exec_cmd("noctalia msg templates-apply")
 end)
+
+hl.on("config.reloaded", sync_lid_display_mode)
+hl.on("monitor.added", sync_lid_display_mode)
+hl.on("monitor.removed", sync_lid_display_mode)
 
 -- Mac-style shortcuts. SUPER is treated as Command, ALT as Option.
 bind(main_mod .. " + SPACE", "noctalia msg panel-toggle launcher")
@@ -224,6 +233,8 @@ bind("XF86MonBrightnessDown", "noctalia msg brightness-down", { locked = true, r
 bind(main_mod .. " + SHIFT + Z", "/home/kogeki/.local/bin/kando-wayland.sh --menu Krita")
 bind("CTRL + ALT + DELETE", "noctalia msg panel-toggle sessionMenu")
 bind(main_mod .. " + SHIFT + P", "noctalia msg dpms-off")
+bind("switch:on:Lid Switch", "/home/kogeki/.local/bin/hypr-lid-display-mode closed", { locked = true })
+bind("switch:off:Lid Switch", "/home/kogeki/.local/bin/hypr-lid-display-mode open", { locked = true })
 
 hl.window_rule({
     name = "suppress-maximize-events",
