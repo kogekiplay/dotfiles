@@ -5,6 +5,7 @@
     spawn-sh-at-startup "noctalia -d"
     spawn-sh-at-startup "sleep 1; niri msg action focus-monitor HDMI-A-1"
     spawn-sh-at-startup "xwayland-satellite"
+    spawn-sh-at-startup "sleep 3; load-27gx-icc.sh"
     spawn-sh-at-startup "wl-paste --type text --watch cliphist store"
     spawn-sh-at-startup "wl-paste --type image --watch cliphist store"
     spawn-sh-at-startup "fcitx5 -d"
