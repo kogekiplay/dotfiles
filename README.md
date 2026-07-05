@@ -9,6 +9,7 @@ Personal Arch Linux dotfiles managed by [chezmoi](https://www.chezmoi.io/). This
 - Kando Wayland wrapper and menu config
 - fcitx5/Rime, GTK/Qt, Alacritty, Starship, Fastfetch, btop, cava, micro, nvim, and superfile settings
 - Wallpaper assets under `~/Pictures/WallPapers`
+- Display ICC profile assets under `~/.local/share/color/icc`
 
 ## Excluded
 
@@ -38,6 +39,7 @@ For this laptop, the source lives at:
 ```bash
 sudo pacman -S --needed \
   niri xwayland-satellite polkit-gnome \
+  colord \
   fish starship alacritty neovim micro fastfetch btop cava superfile \
   fcitx5 fcitx5-rime fcitx5-configtool fcitx5-gtk fcitx5-qt \
   firefox nautilus cliphist wl-clipboard grim slurp swappy \
@@ -77,3 +79,4 @@ Log out and back in after changing group membership.
 - Noctalia's wallpaper hook runs `~/.config/noctalia/apply-morandi.sh`.
 - `morandi-gen.py` updates colors for niri, fcitx5, starship, fastfetch, alacritty, cava, and Qt/KDE color schemes.
 - Kando's Krita key menus use the `ydotool` user service.
+- `~/.local/share/color/icc/27GX-Ultra.icc` is the ColorSync profile copied from macOS for the external 27GX-Ultra display. niri 26.04 does not expose a compositor ICC output-profile setting, so this is available to colord/ICC-aware applications rather than global Wayland output correction. To register it after applying dotfiles: `colormgr import-profile ~/.local/share/color/icc/27GX-Ultra.icc`.
