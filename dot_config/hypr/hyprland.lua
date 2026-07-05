@@ -130,6 +130,62 @@ hl.config({
     },
 })
 
+local function configure_hyprbars()
+    if not (hl.plugin and hl.plugin.hyprbars) then
+        return
+    end
+
+    hl.config({
+        plugin = {
+            hyprbars = {
+                enabled = true,
+                bar_color = 0xee202124,
+                bar_height = 28,
+                bar_blur = true,
+                bar_title_enabled = true,
+                bar_text_size = 11,
+                bar_text_weight = 500,
+                bar_text_font = "Sans",
+                bar_text_align = "center",
+                bar_buttons_alignment = "left",
+                bar_part_of_window = true,
+                bar_precedence_over_border = true,
+                bar_padding = 10,
+                bar_button_padding = 7,
+                icon_on_hover = true,
+                inactive_button_color = 0x44ffffff,
+                on_double_click = "hyprctl dispatch fullscreen 1",
+            },
+        },
+    })
+
+    hl.plugin.hyprbars.add_button({
+        bg_color = "rgb(ff5f57)",
+        fg_color = "rgb(2b2b2b)",
+        size = 11,
+        icon = "x",
+        action = "hyprctl dispatch killactive",
+    })
+
+    hl.plugin.hyprbars.add_button({
+        bg_color = "rgb(ffbd2e)",
+        fg_color = "rgb(2b2b2b)",
+        size = 11,
+        icon = "-",
+        action = "hyprctl dispatch movetoworkspacesilent special:minimized",
+    })
+
+    hl.plugin.hyprbars.add_button({
+        bg_color = "rgb(28c840)",
+        fg_color = "rgb(2b2b2b)",
+        size = 11,
+        icon = "+",
+        action = "hyprctl dispatch fullscreen 1",
+    })
+end
+
+configure_hyprbars()
+
 hl.gesture({
     fingers = 3,
     direction = "horizontal",
@@ -156,6 +212,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE")
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE")
     hl.exec_cmd("systemctl --user start hyprpolkitagent.service")
+    hl.exec_cmd("hyprpm reload")
     sync_lid_display_mode()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")

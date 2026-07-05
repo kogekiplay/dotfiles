@@ -4,7 +4,7 @@
 
 - 外接 `27GX-Ultra`：`HDMI-A-1`，`5120x2880@165`，`scale = 2`，10-bit framebuffer，加载 ICC。
 - 内置屏：`eDP-1`，`2560x1600@165`，`scale = 1.6`，位于外接屏右侧。
-- Noctalia 负责顶栏、launcher、window switcher、控制中心、锁屏和截图入口。
+- Noctalia 负责顶栏、launcher、window switcher、控制中心、锁屏和截图入口；Hyprbars 给普通窗口提供 mac 风格左侧红黄绿标题栏按钮。
 - `Super` 按键按 macOS 的 Command 使用，`Alt` 按 Option 使用。
 - 登录界面使用 `greetd` + `noctalia-greeter-git`，默认 `kogeki` 和 `Hyprland (uwsm-managed)`，并在 `HDMI-A-1` 与 `eDP-1` 各显示一份登录框。
 
@@ -43,3 +43,7 @@
 Noctalia greeter 自带 compositor，登录界面用 `WLR_DRM_DEVICES=/dev/dri/card2:/dev/dri/card1` 让 AMD 内屏 GPU 优先，从而同时启用内外屏；Hyprland 会话的 5K@165、ICC、10-bit 和 NVIDIA 外接屏优先设置仍以 `hyprland.lua` 与 `AQ_DRM_DEVICES` 为准。
 
 合盖时 `~/.local/bin/hypr-lid-display-mode` 会把 `eDP-1` 禁用，只保留外接 `HDMI-A-1`；开盖时恢复 `eDP-1` 到 `2560x1600@165`、`scale = 1.6`。如果没有检测到外接屏，脚本不会禁用内屏。脚本还会检查 Noctalia 的 bar layer，缺失时自动重启 Noctalia，避免外屏只剩鼠标。
+
+## Hyprland 插件
+
+Hyprbars 通过 `hyprpm` 从 `https://github.com/kogekiplay/hyprland-plugins` 安装。这个 fork 在 `hyprbars` 里补了当前 Hyprland git 的 animation manager API 变更；启动时 `hyprland.lua` 会执行 `hyprpm reload`，插件加载后 Hyprland 会自动二次读取配置。
