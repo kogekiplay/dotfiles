@@ -30,16 +30,16 @@ def float_value(text, key):
 
 
 class NoctaliaGlassTest(unittest.TestCase):
-    def test_bar_and_dock_are_translucent_enough_for_layer_blur(self):
+    def test_bar_and_dock_keep_low_tint_for_layer_blur(self):
         settings = NOCTALIA_SETTINGS.read_text()
         bar_default = nested_section(settings, "bar.default")
         dock = section(settings, "dock")
 
-        self.assertLessEqual(float_value(bar_default, "background_opacity"), 0.70)
-        self.assertGreaterEqual(float_value(bar_default, "background_opacity"), 0.55)
-        self.assertLessEqual(float_value(bar_default, "capsule_opacity"), 0.36)
-        self.assertLessEqual(float_value(dock, "background_opacity"), 0.65)
-        self.assertGreaterEqual(float_value(dock, "background_opacity"), 0.45)
+        self.assertLessEqual(float_value(bar_default, "background_opacity"), 0.38)
+        self.assertGreaterEqual(float_value(bar_default, "background_opacity"), 0.18)
+        self.assertLessEqual(float_value(bar_default, "capsule_opacity"), 0.24)
+        self.assertLessEqual(float_value(dock, "background_opacity"), 0.50)
+        self.assertGreaterEqual(float_value(dock, "background_opacity"), 0.30)
 
     def test_noctalia_surfaces_have_hyprland_layer_blur_enabled(self):
         config = HYPRLAND_CONFIG.read_text()
