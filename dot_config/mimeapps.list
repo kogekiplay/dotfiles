@@ -1,7 +1,14 @@
-[Default Applications]
-application/yaml=nvim.desktop
-text/plain=nvim.desktop
 
-[Added Associations]
-application/yaml=nvim.desktop;
-text/plain=nvim.desktop;
+[Default Applications]
+x-scheme-handler/clash=sparkle.desktop
+x-scheme-handler/mihomo=sparkle.desktop
+x-scheme-handler/sparkle=sparkle.desktop
+text/html=zen.desktop
+x-scheme-handler/http=zen.desktop
+x-scheme-handler/https=zen.desktop
+x-scheme-handler/about=zen.desktop
+x-scheme-handler/unknown=zen.desktop
+application/xhtml+xml=chromium.desktop
+application/xml=chromium.desktop
+application/pdf=chromium.desktop
+x-scheme-handler/ccswitch=cc-switch-handler.desktop

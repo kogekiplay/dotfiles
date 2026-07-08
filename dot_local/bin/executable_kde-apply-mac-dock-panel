@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+src="${HOME}/.local/share/kogeki-kde/plasma/Panel.qml"
+dst="/usr/share/plasma/shells/org.kde.plasma.desktop/contents/views/Panel.qml"
+
+if [[ ! -f "$src" ]]; then
+  echo "missing source: $src" >&2
+  exit 1
+fi
+
+if [[ ! -f "$dst" ]]; then
+  echo "missing Plasma Panel.qml target: $dst" >&2
+  exit 1
+fi
+
+backup="${dst}.bak.kogeki-kde-$(date +%Y%m%d-%H%M%S)"
+sudo cp -a "$dst" "$backup"
+sudo install -m 0644 "$src" "$dst"
+
+if command -v kquitapp6 >/dev/null 2>&1 && command -v kstart >/dev/null 2>&1; then
+  kquitapp6 plasmashell >/dev/null 2>&1 || pkill -x plasmashell || true
+  sleep 2
+  kstart plasmashell >/dev/null 2>&1 || true
+fi
+
+echo "installed patched Panel.qml"
+echo "backup: $backup"

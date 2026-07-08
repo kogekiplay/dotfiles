@@ -1,0 +1,28 @@
+#!/bin/sh
+set -eu
+
+uid=1000
+user=kogeki
+bus="unix:path=/run/user/$uid/bus"
+busctl=/usr/bin/busctl
+
+call_rime() {
+    if [ "$(id -u)" = "$uid" ]; then
+        XDG_RUNTIME_DIR="/run/user/$uid" DBUS_SESSION_BUS_ADDRESS="$bus" \
+            "$busctl" --user call org.fcitx.Fcitx5 /rime org.fcitx.Fcitx.Rime1 "$@"
+    else
+        /usr/bin/runuser -u "$user" -- /usr/bin/env \
+            XDG_RUNTIME_DIR="/run/user/$uid" \
+            DBUS_SESSION_BUS_ADDRESS="$bus" \
+            "$busctl" --user call org.fcitx.Fcitx5 /rime org.fcitx.Fcitx.Rime1 "$@"
+    fi
+}
+
+mode="$(call_rime IsAsciiMode | awk '{print $2}')"
+case "$mode" in
+    true) target=false ;;
+    false) target=true ;;
+    *) exit 1 ;;
+esac
+
+call_rime SetAsciiMode b "$target" >/dev/null

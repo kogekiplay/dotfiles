@@ -1,31 +1,35 @@
-# kogeki Arch Profile
+# kogeki Arch KDE Profile
 
-This fork tracks LanRhyme's desktop style as upstream inspiration, but the active branch is kogeki's `main`
+This branch tracks kogeki's KDE Plasma desktop profile.
 
 ## Target
 
 - User: `kogeki`
 - Home: `/home/kogeki`
 - OS: plain Arch Linux
-- Session: Hyprland + Noctalia 5
-- Login: greetd + `noctalia-greeter-git`, mirrored on `HDMI-A-1` and `eDP-1`
+- Session: KDE Plasma Wayland
+- Login: SDDM, greeter backend on Wayland
 - Proxy: Sparkle, managed outside dotfiles
+- Remote desktop/VNC state: not managed
 
 ## Important Choices
 
-- Noctalia uses `settings.toml`, not old `settings.json`
-- Wallpaper assets apply to `~/Pictures/WallPapers`
-- The Morandi hook does not write proxy client state or bootloader artwork
-- Runtime state, credentials, paired devices, and generated caches are excluded
-- Kando uses `~/.local/bin/kando-wayland.sh` for Wayland-friendly Electron startup
+- Plasma panel layout is managed in `~/.config/plasma-org.kde.plasma.desktop-appletsrc` and `~/.config/plasmashellrc`.
+- The mac-style bottom Dock needs the bundled Plasma `Panel.qml` installed with `kde-apply-mac-dock-panel`.
+- `Panel 73` is the real bottom Dock. There is intentionally no `Panel 78` fake reserve panel.
+- KWin script `codexmacdockgap` is disabled and not installed; the stable reserve is handled by the real panel plus patched `Panel.qml`.
+- Browser profiles, KDE Connect pairings, proxy state, and crash reports are excluded.
 
 ## Post-Apply Commands
 
 ```bash
-sudo usermod -aG input kogeki
-printf '%s\n' 'z /dev/uinput 0660 root input -' | sudo tee /etc/tmpfiles.d/uinput.conf >/dev/null
-sudo systemd-tmpfiles --create /etc/tmpfiles.d/uinput.conf
-systemctl --user enable --now ydotool.service
+~/.local/bin/kde-apply-mac-dock-panel
 ```
 
-Log out and back in after changing `input` group membership for `ydotool`
+If user services were changed:
+
+```bash
+systemctl --user daemon-reload
+```
+
+If input method environment variables do not apply immediately, log out and back in.

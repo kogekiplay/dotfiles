@@ -1,22 +1,71 @@
-# ~/.zshrc
+# ~/.zshrc - interactive shell setup
 
-export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
+# User-local command paths. Keep CodeG/npm prefixes before system paths.
+path=(
+  "$HOME/.codeg/npm-global/bin"
+  "$HOME/.local/npm-global/bin"
+  "$HOME/.local/bin"
+  /usr/local/sbin
+  /usr/local/bin
+  /usr/bin
+  /usr/bin/site_perl
+  /usr/bin/vendor_perl
+  /usr/bin/core_perl
+  $path
+)
+typeset -U path PATH
 
-[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+export LANG=${LANG:-zh_CN.UTF-8}
+export LC_CTYPE=${LC_CTYPE:-zh_CN.UTF-8}
+export EDITOR=${EDITOR:-vim}
+export VISUAL=${VISUAL:-$EDITOR}
+export PAGER=${PAGER:-less}
 
-# Wayland input method environment.
-export XMODIFIERS=@im=fcitx
-export QT_IM_MODULE=fcitx
+# History
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt append_history
+setopt inc_append_history
+setopt share_history
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt extended_history
 
-if command -v fastfetch >/dev/null 2>&1; then
-    fastfetch
+# Shell ergonomics
+setopt auto_cd
+setopt interactive_comments
+setopt no_beep
+setopt prompt_subst
+bindkey -e
+
+# Completion
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+autoload -Uz compinit
+if [[ -n "$HOME/.zcompdump" && "$HOME/.zcompdump" -nt /usr/share/zsh ]]; then
+  compinit -C
+else
+  compinit
 fi
 
-if command -v starship >/dev/null 2>&1; then
-    eval "$(starship init zsh)"
-fi
+# Prompt: user@host cwd %
+autoload -Uz colors && colors
+PROMPT='%F{cyan}%n@%m%f %F{yellow}%~%f %# '
 
-export BUN_INSTALL="$HOME/.bun"
-[ -d "$BUN_INSTALL/bin" ] && export PATH="$BUN_INSTALL/bin:$PATH"
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+# Useful aliases
+alias ls='ls --color=auto'
+alias ll='ls -alF --color=auto'
+alias la='ls -A --color=auto'
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip --color=auto'
+
+# Keep terminal title helpful in GUI terminals.
+case "$TERM" in
+  xterm*|rxvt*|alacritty*|foot*|ghostty*)
+    precmd() { print -Pn "\e]0;%n@%m: %~\a" }
+    ;;
+esac
