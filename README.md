@@ -14,7 +14,7 @@
 
 ## 管理范围
 
-- KDE Plasma 用户配置：顶栏、浮动 Dock、KWin、KRunner、Dolphin、Spectacle、全局快捷键和 KDE 默认值
+- KDE Plasma 用户配置：Itchy 顶栏、Itchy Dock、KWin、KRunner、Dolphin、Spectacle、全局快捷键和 KDE 默认值
 - Itchy KDE theme resources: Global Theme, Plasma Style, Aurorae decoration, color scheme, wallpaper, and WhiteSur cursor theme
 - KDE/macOS 风格 Dock 支持文件：`~/.local/share/kogeki-kde/plasma/Panel.qml`
 - Ghostty、GTK 3/4、Qt5/Qt6、fontconfig、fcitx5、zsh、bash、mimeapps、systemd user units
@@ -76,7 +76,7 @@ The active Plasma appearance is Itchy:
 - Wallpaper: `Itchy-V2`
 - Cursor theme: `WhiteSur-cursors`
 
-Theme assets are vendored under `dot_local/share/` so `chezmoi apply` can reproduce the appearance without running KDE Store's Global Theme layout script. Do not apply the Global Theme layout automatically; it can replace the custom top bar and bottom Dock.
+Theme assets are vendored under `dot_local/share/`, and the current Itchy full panel layout is captured in `dot_config/private_plasma-org.kde.plasma.desktop-appletsrc` plus `dot_config/private_plasmashellrc`. `Panel 79` is the top bar and `Panel 101` is the bottom Dock.
 
 ## 关键软件包
 
@@ -110,8 +110,8 @@ paru -S --needed rime-ice-pinyin-git zen-browser-bin
 ## 当前 KDE 形态
 
 - 顶栏：KDE appmenu + 系统托盘 + 日期时间
-- Dock：底部居中浮动 Dock，真实 panel reserve 为 80，视觉高度由 patched `Panel.qml` 固定为 64
-- 壁纸：KDE Next 默认壁纸，Dock 后方保持桌面壁纸连续
+- Dock：Itchy full layout 底部 Dock，当前 panel 为 `Panel 101`
+- 壁纸：Itchy-V2
 - 输入法：fcitx5/Rime，中文环境变量由 `environment.d` 管理
 - 字体：桌面中文优先 Noto/Harmony 风格，等宽使用 Maple Mono NL NF CN
 

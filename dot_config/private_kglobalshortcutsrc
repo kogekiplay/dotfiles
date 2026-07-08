@@ -252,6 +252,7 @@ activate task manager entry 7=Meta+7,Meta+7,激活任务管理器条目 7
 activate task manager entry 8=Meta+8,Meta+8,激活任务管理器条目 8
 activate task manager entry 9=Meta+9,Meta+9,激活任务管理器条目 9
 activate widget 27=none,none,激活 窗口列表 小部件
+activate widget 80=Alt+F1,none,激活 应用程序启动器 小部件
 clear history=none,none,清除通知历史记录
 clear-history=none,none,清除剪贴板历史(L)
 clipboard_action=Meta+Ctrl+X,Meta+Ctrl+X,自动弹出操作菜单
