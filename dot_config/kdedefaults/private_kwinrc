@@ -1,4 +1,7 @@
 [org.kde.kdecoration2]
-NoPlugin=false
-library=org.kde.breeze
-theme=Breeze
+BorderSize=None
+BorderSizeAuto=false
+ButtonsOnLeft=
+ButtonsOnRight=IAX
+library=org.kde.kwin.aurorae
+theme=__aurorae__svg__CatppuccinLatte-Modern

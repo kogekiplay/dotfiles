@@ -5,31 +5,6 @@ RightButton;NoModifier=org.kde.contextmenu
 [ActionPlugins][1]
 RightButton;NoModifier=org.kde.contextmenu
 
-[Containments][101]
-activityId=
-formfactor=2
-immutability=1
-lastScreen=0
-location=4
-plugin=org.kde.panel
-wallpaperplugin=org.kde.image
-
-[Containments][101][Applets][102]
-immutability=1
-plugin=org.kde.plasma.icontasks
-
-[Containments][101][Applets][102][Configuration][General]
-launchers=applications:zen.desktop,applications:org.kde.dolphin.desktop,applications:com.mitchellh.ghostty.desktop,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:1password.desktop,applications:codex-desktop.desktop,applications:codeg.desktop,applications:org.telegram.desktop.desktop,applications:wechat-universal.desktop,applications:qq.desktop
-
-onlyGroupWhenFull=false
-showOnlyCurrentDesktop=false
-[Containments][101][ConfigDialog]
-DialogHeight=78
-DialogWidth=1920
-
-[Containments][101][General]
-AppletOrder=102
-
 [Containments][78]
 ItemGeometries-1280x720=
 ItemGeometriesHorizontal=
@@ -55,7 +30,7 @@ immutability=1
 plugin=org.kde.plasma.kickoff
 
 [Containments][79][Applets][80][Configuration]
-popupHeight=495
+popupHeight=493
 popupWidth=657
 
 [Containments][79][Applets][80][Configuration][ConfigDialog]
@@ -65,7 +40,7 @@ DialogWidth=720
 [Containments][79][Applets][80][Configuration][General]
 applicationsDisplay=0
 favoritesPortedToKAstats=true
-icon=start-here-kde
+icon=start-here
 systemFavorites=suspend\\,hibernate\\,reboot\\,shutdown
 
 [Containments][79][Applets][80][Configuration][Shortcuts]
@@ -216,7 +191,7 @@ DialogHeight=78
 DialogWidth=1920
 
 [Containments][79][General]
-AppletOrder=80;81;82;83;84;85;86
+AppletOrder=80;81;82;84;85;86;83
 
 [ScreenMapping]
 itemsOnDisabledScreens=

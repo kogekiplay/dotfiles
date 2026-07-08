@@ -14,9 +14,9 @@
 
 ## 管理范围
 
-- KDE Plasma 用户配置：Itchy 顶栏、Itchy Dock、KWin、KRunner、Dolphin、Spectacle、全局快捷键和 KDE 默认值
-- Itchy KDE theme resources: Global Theme, Plasma Style, Aurorae decoration, color scheme, wallpaper, and WhiteSur cursor theme
-- KDE/macOS 风格 Dock 支持文件：`~/.local/share/kogeki-kde/plasma/Panel.qml`
+- KDE Plasma 用户配置：Catppuccin 浅色顶栏、Latte Dock NG、KWin、KRunner、Dolphin、Spectacle、全局快捷键和 KDE 默认值
+- Catppuccin KDE resources: Global Theme, Aurorae decoration, color scheme, splash screen, and cursor theme
+- Latte Dock NG 布局：`~/.config/latte/Kogeki.layout.latte`
 - Ghostty、GTK 3/4、Qt5/Qt6、fontconfig、fcitx5、zsh、bash、mimeapps、systemd user units
 - `~/.local/bin/rime-toggle-ascii`
 - 可复用壁纸资源
@@ -47,36 +47,24 @@ git switch kde
 chezmoi apply
 ```
 
-## KDE Dock 系统补丁
+## KDE Panel Notes
 
-Plasma 的浮动 Dock “窗口上方留缝、Dock 底部留缝、壁纸连续”效果需要替换 Plasma shell 的系统 `Panel.qml`。chezmoi 只会把补丁文件放到用户目录，不会自动写 `/usr/share`。
-
-应用 dotfiles 后执行：
-
-```bash
-~/.local/bin/kde-apply-mac-dock-panel
-```
-
-脚本会：
-
-- 备份 `/usr/share/plasma/shells/org.kde.plasma.desktop/contents/views/Panel.qml`
-- 安装 `~/.local/share/kogeki-kde/plasma/Panel.qml`
-- 重启当前用户的 `plasmashell`
-
-Plasma 更新后如果 Dock 视觉恢复默认，重新运行这个脚本。
+当前底部 Dock 由 Latte Dock NG 管理，不再使用 Plasma 原生底部 panel。仓库里仍保留 `~/.local/share/kogeki-kde/plasma/Panel.qml` 和 `~/.local/bin/kde-apply-mac-dock-panel`，用于回退到 Plasma 原生 Dock 时安装系统级 panel 补丁；常规 Catppuccin + Latte 配置不需要运行它。
 
 ## Theme
 
-The active Plasma appearance is Itchy:
+The active Plasma appearance is official Catppuccin Latte:
 
-- KDE Store Global Theme: `https://store.kde.org/p/1898336`
-- Plasma Style: `https://store.kde.org/p/1895970`
-- Aurorae window decoration: `https://store.kde.org/p/1895961`
-- Color scheme: `https://store.kde.org/p/1895952`
-- Wallpaper: `Itchy-V2`
-- Cursor theme: `WhiteSur-cursors`
+- KDE port: `https://github.com/catppuccin/kde`
+- Global Theme: `Catppuccin-Latte-Mauve`
+- Aurorae window decoration: `CatppuccinLatte-Modern`
+- Color scheme: `CatppuccinLatteMauve`
+- Plasma Style: `default`
+- Cursor theme: `catppuccin-latte-mauve-cursors`
+- Icon theme: `WhiteSur-light`
+- Dock: Latte Dock NG layout `Kogeki`
 
-Theme assets are vendored under `dot_local/share/`, and the current Itchy full panel layout is captured in `dot_config/private_plasma-org.kde.plasma.desktop-appletsrc` plus `dot_config/private_plasmashellrc`. `Panel 79` is the top bar and `Panel 101` is the bottom Dock.
+Theme assets are vendored under `dot_local/share/`. `Panel 79` is the top bar; the old Plasma bottom panel has been removed in favor of Latte Dock NG.
 
 ## 关键软件包
 
@@ -102,7 +90,7 @@ sudo pacman -S --needed \
 Arch Linux CN / AUR / 第三方包按机器实际情况安装，例如：
 
 ```bash
-paru -S --needed rime-ice-pinyin-git zen-browser-bin
+paru -S --needed rime-ice-pinyin-git zen-browser-bin latte-dock-ng whitesur-icon-theme
 ```
 
 1Password、Sparkle、CodeG、Codex Desktop 等 release 包不由 dotfiles 自动安装。
@@ -110,8 +98,8 @@ paru -S --needed rime-ice-pinyin-git zen-browser-bin
 ## 当前 KDE 形态
 
 - 顶栏：KDE appmenu + 系统托盘 + 日期时间
-- Dock：Itchy full layout 底部 Dock，当前 panel 为 `Panel 101`
-- 壁纸：Itchy-V2
+- Dock：Latte Dock NG，布局文件为 `~/.config/latte/Kogeki.layout.latte`
+- 壁纸：用户当前 KDE 壁纸，不在主题里强制切换
 - 输入法：fcitx5/Rime，中文环境变量由 `environment.d` 管理
 - 字体：桌面中文优先 Noto/Harmony 风格，等宽使用 Maple Mono NL NF CN
 

@@ -1,8 +1,9 @@
 [General]
-ColorScheme=BreezeLight
+ColorScheme=CatppuccinLatteMauve
 
 [Icons]
-Theme=breeze
+Theme=WhiteSur-light
 
 [KDE]
+LookAndFeelPackage=Catppuccin-Latte-Mauve
 widgetStyle=Breeze

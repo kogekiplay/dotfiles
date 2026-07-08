@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Latte Dock NG
+Comment=Start the Kogeki Latte Dock layout
+Exec=latte-dock-ng --replace --layout Kogeki
+Icon=latte-dock
+Terminal=false
+StartupNotify=false
+X-KDE-StartupNotify=false
+X-KDE-Wayland-Interfaces=org_kde_plasma_window_management,org_kde_kwin_keystate,zkde_screencast_unstable_v1
