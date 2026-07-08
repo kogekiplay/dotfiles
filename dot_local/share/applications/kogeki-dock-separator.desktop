@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Dock Separator
+Comment=Visual separator for the Latte dock
+Exec=/usr/bin/true
+Icon=kogeki-dock-separator
+NoDisplay=true
+Terminal=false
+StartupNotify=false
+Categories=Utility;
