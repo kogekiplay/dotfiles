@@ -15,6 +15,7 @@ This branch tracks kogeki's KDE Plasma desktop profile.
 ## Important Choices
 
 - Plasma panel layout is managed in `~/.config/plasma-org.kde.plasma.desktop-appletsrc` and `~/.config/plasmashellrc`.
+- Appearance uses the Itchy Plasma 6 theme family, with the theme resources vendored under `~/.local/share/`.
 - The mac-style bottom Dock needs the bundled Plasma `Panel.qml` installed with `kde-apply-mac-dock-panel`.
 - `Panel 73` is the real bottom Dock. There is intentionally no `Panel 78` fake reserve panel.
 - KWin script `codexmacdockgap` is disabled and not installed; the stable reserve is handled by the real panel plus patched `Panel.qml`.
